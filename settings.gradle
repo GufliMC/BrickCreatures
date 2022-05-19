@@ -1,8 +1,13 @@
-rootProject.name = 'BrickNPCs'
+pluginManagement {
+    repositories {
+        gradlePluginPortal()
+        maven { url "https://repo.jorisg.com/snapshots" }
+    }
+}
+
+rootProject.name = 'BrickCreatures'
 
 include 'api'
-include 'app'
-include 'scripts'
-
-//includeBuild '../BrickEntityNavigator'
+include 'common'
+include 'minestom'
 

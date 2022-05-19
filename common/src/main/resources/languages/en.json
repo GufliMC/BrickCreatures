@@ -1,0 +1,50 @@
+{
+  "cmd.error.args.player": "<red>The player {0} is not online.",
+  "cmd.error.args.type": "<red>The entity type {0} does not exist.",
+  "cmd.error.args.spawn": "<red>The spawn {0} does not exist.",
+  "cmd.error.args.trait": "<red>The trait {0} does not exist.",
+  "cmd.error.args.creature": "<red>The creature {0} does not exist.",
+
+  "cmd.creature.create": "<green>Created creature {0} of type {1}.",
+  "cmd.creature.create.invalid": "A creature with that name already exists.",
+
+  "cmd.spawn.create": "<green>Created spawn {0} of creature {1} at your current position.",
+  "cmd.spawn.create.invalid": "A spawn with that name already exists.",
+
+
+
+  "cmd.template.create.invalid": "A template with that name already exists.",
+  "cmd.template.create": "Created {0}.",
+
+  "cmd.template.delete.usage": "Invalid usage, try this: /bn template delete <template>",
+  "cmd.template.delete": "Deleted {0}.",
+
+  "cmd.template.list": "List of templates: {0}",
+
+  "cmd.template.edit.customname.invalid": "Invalid usage, try this: /bn template edit customname <template> <name>",
+  "cmd.template.edit.customname": "Changed the custom name of {0} to {1}.",
+
+  "cmd.template.edit.skin.usage": "Invalid usage, try this: /bn template edit skin <template> <player>",
+  "cmd.template.edit.skin.invalid": "{0} is not an existing player.",
+  "cmd.template.edit.skin":  "Changed the skin of {0}.",
+
+  "cmd.template.trait.list.usage": "Invalid usage, try this: /bn template trait list <template>",
+  "cmd.template.trait.list": "List of traits for {0}: {1}",
+
+  "cmd.template.trait.add.usage": "Invalid usage, try this: /bn template trait add <template> <trait>",
+  "cmd.template.trait.add": "Added trait {1} to {0}.",
+
+  "cmd.template.trait.remove.usage": "Invalid usage, try this: /bn template trait remove <template> <trait>",
+  "cmd.template.trait.remove": "Removed trait {1} from {0}.",
+
+  "cmd.spawn.delete.usage": "Invalid usage, try this: /bn spawn delete <spawn>",
+  "cmd.spawn.delete": "Deleted {0}.",
+
+  "cmd.spawn.edit.lookhere.usage": "Invalid usage, try this: /bn spawn edit lookhere <spawn>",
+  "cmd.spawn.edit.lookhere": "Updated {0} to look in your direction.",
+
+  "cmd.spawn.edit.teleporthere.usage": "Invalid usage, try this: /bin spawn edit teleporthere <spawn>",
+  "cmd.spawn.edit.lookhere": "Updated {0} to your position.",
+
+  "cmd.spawn.list": "List of spawns: {0}"
+}

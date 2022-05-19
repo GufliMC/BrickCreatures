@@ -1,30 +1,7 @@
 plugins {
-    id 'java'
-    id 'maven-publish'
+    id 'java-library'
 }
 
 dependencies {
-    compileOnly 'com.github.Minestom:Minestom:-SNAPSHOT'
-
-    implementation 'org.minestombrick.entitynavigator:common:1.0-SNAPSHOT'
-    implementation 'org.minestombrick.entitynavigator:minestom:1.0-SNAPSHOT'
-}
-
-publishing {
-    repositories {
-        maven {
-            name = "Jorisg"
-            url = uri("https://repo.jorisg.com/snapshots")
-            credentials(org.gradle.api.credentials.PasswordCredentials)
-        }
-    }
-
-    publications {
-        release(MavenPublication) {
-            from components.java
-            groupId = rootProject.group
-            artifactId = project.name
-            version = rootProject.version
-        }
-    }
+    api 'net.kyori:adventure-api:4.+'
 }

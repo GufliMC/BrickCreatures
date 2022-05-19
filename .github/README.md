@@ -14,7 +14,7 @@ and place it in the extension folder of your minestom server.
 ## Usage
 ### Templates
 
-An NPC templatate contains all the necessary information that makes the npc unique (name, skin, traits, ...). 
+An NPC templatate contains all the necessary information that makes the persistentCreature unique (name, skin, traits, ...). 
 A single template can be used for multiple npcs, changing a template will also update all npcs.
 
 | Command                                        | Permission                         |
@@ -27,7 +27,7 @@ A single template can be used for multiple npcs, changing a template will also u
 
 ### Spawns
 
-A spawn is a position in the world where an npc is spawned with a specific template.
+A spawn is a position in the world where an persistentCreature is spawned with a specific template.
 You can create multiple spawns with the same template.
 
 | Command                            | Permission                    |
@@ -44,7 +44,7 @@ You can instantly create an template and a spawn of the same name with the follo
 
 | Command                            | Permission           |
 |------------------------------------|----------------------|
-| /bn npc create (name) (entitytype) | bricknpcs.npc.create |
+| /bn persistentCreature create (name) (entitytype) | bricknpcs.persistentCreature.create |
 
 ## Database
 
