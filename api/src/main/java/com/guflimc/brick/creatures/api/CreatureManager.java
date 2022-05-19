@@ -32,6 +32,8 @@ public interface CreatureManager<WORLD, ENTITY, ENTITYTYPE> {
 
     CompletableFuture<Void> remove(@NotNull PersistentCreature creature);
 
+    void refresh(@NotNull PersistentCreature creature);
+
     // persistent spawn
 
     Collection<PersistentSpawn> spawns();
@@ -44,6 +46,8 @@ public interface CreatureManager<WORLD, ENTITY, ENTITYTYPE> {
     CompletableFuture<Void> remove(@NotNull PersistentSpawn spawn);
 
     CompletableFuture<Void> persist(@NotNull PersistentSpawn spawn);
+
+    void refresh(@NotNull PersistentSpawn spawn);
 
 
 

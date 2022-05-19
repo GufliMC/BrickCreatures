@@ -1,50 +1,43 @@
-# BrickNPCs
+# BrickCreatures
 
 An extension for [Minestom](https://github.com/Minestom/Minestom) to create persistent NPCs.
 
 ## Install
 
-Get the [release](https://github.com/MinestomBrick/BrickNPCs/releases)
+Get the [release](https://github.com/GufliMC/BrickCreatures/releases)
 and place it in the extension folder of your minestom server.
 
 ### Dependencies
-* [BrickI18n](https://github.com/MinestomBrick/BrickI18n)
 
+* [BrickI18n](https://github.com/GufliMC/BrickI18n)
 
 ## Usage
-### Templates
 
-An NPC templatate contains all the necessary information that makes the persistentCreature unique (name, skin, traits, ...). 
-A single template can be used for multiple npcs, changing a template will also update all npcs.
+### Creatures
 
-| Command                                        | Permission                         |
-|------------------------------------------------|------------------------------------|
-| /bn template list                              | bricknpcs.template.list            |
-| /bn template create (name) (entitytype)        | bricknpcs.template.create          |
-| /bn template delete (template)                 | bricknpcs.template.delete          |
-| /bn template edit customname (template) (name) | bricknpcs.template.edit.customname |
-| /bn template edit skin (template) (player)     | bricknpcs.template.edit.skin       |
+A creature contains all the necessary information that makes the entity unique (name, skin, traits, ...). A single
+creature can be used for multiple spawns, changing a creature will also update all spawns.
+
+| Command                                        | Permission                              |
+|------------------------------------------------|-----------------------------------------|
+| /bc creature list                              | brickcreatures.creature.list            |
+| /bc creature create (name) (entitytype)        | brickcreatures.creature.create          |
+| /bc creature delete (creature)                 | brickcreatures.creature.delete          |
+| /bc creature edit customname (creature) (name) | brickcreatures.creature.edit.customname |
+| /bc creature edit skin (creature) (player)     | brickcreatures.creature.edit.skin       |
 
 ### Spawns
 
-A spawn is a position in the world where an persistentCreature is spawned with a specific template.
-You can create multiple spawns with the same template.
+A spawn is a position in the world where an persistentCreature is spawned with a specific creature. You can create
+multiple spawns with the same creature.
 
-| Command                            | Permission                    |
-|------------------------------------|-------------------------------|
-| /bn spawn list                     | bricknpcs.spawn.list          |
-| /bn spawn create (name) (template) | bricknpcs.spawn.create        |
-| /bn spawn delete (spawn)           | bricknpcs.spawn.delete        |
-| /bn spawn edit lookhere (spawn)    | bricknpcs.spawn.edit.lookhere |
-
-### NPCS
-
-You can instantly create an template and a spawn of the same name with the following command.
-
-
-| Command                            | Permission           |
-|------------------------------------|----------------------|
-| /bn persistentCreature create (name) (entitytype) | bricknpcs.persistentCreature.create |
+| Command                            | Permission                         |
+|------------------------------------|------------------------------------|
+| /bc spawn list                     | brickcreatures.spawn.list          |
+| /bc spawn create (name) (creature) | brickcreatures.spawn.create        |
+| /bc spawn delete (spawn)           | brickcreatures.spawn.delete        |
+| /bc spawn edit lookhere (spawn)    | brickcreatures.spawn.edit.lookhere |
+| /bc spawn edit tphere (spawn)      | brickcreatures.spawn.edit.tphere   |
 
 ## Database
 
@@ -53,7 +46,7 @@ You can change the database settings in the `config.json`.
 ```json
 {
   "database": {
-    "dsn": "jdbc:h2:file:./extensions/BrickNPCs/data/database.h2",
+    "dsn": "jdbc:h2:file:./extensions/BrickCreatures/data/database.h2",
     "username": "dbuser",
     "password": "dbuser"
   }
@@ -68,18 +61,19 @@ MySQL is supported, use the following format:
 
 ## API
 
-### Maven
+### Gradle
+
 ```
 repositories {
     maven { url "https://repo.jorisg.com/snapshots" }
 }
 
 dependencies {
-    implementation 'org.minestombrick.npcs:api:1.0-SNAPSHOT'
+    implementation 'com.guflimc.brick.creatures:api:1.0-SNAPSHOT'
 }
 ```
 
 ### Usage
 
-Check the [javadocs](https://minestombrick.github.io/BrickNPCs/)
+Check the [javadocs](https://guflimc.github.io/BrickCreatures/)
 

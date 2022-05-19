@@ -75,12 +75,14 @@ public class MinestomCreatureManager implements CreatureManager<Instance, Entity
     // SPAWNS
 
     private MinestomCreature spawnPersistedCreature(@NotNull PersistentSpawn spawn, @NotNull Instance instance) {
-        MinestomCreature creature = spawn(spawn.position(), instance, spawn.creature());
+        MinestomCreature creature = spawn(spawn.position(), instance, EntityType.fromNamespaceId(spawn.creature().type()),
+                spawn.creature(), spawn);
         spawnedCreatures.add(creature);
         return creature;
     }
 
-    private MinestomCreature spawn(@NotNull Position position, @NotNull Instance instance, @NotNull EntityType type, @Nullable PersistentCreature creature) {
+    private MinestomCreature spawn(@NotNull Position position, @NotNull Instance instance, @NotNull EntityType type,
+                                   @Nullable PersistentCreature creature, @Nullable PersistentSpawn spawn) {
         EntityCreature entity;
         if (type == EntityType.PLAYER) {
             entity = new FakeFakePlayer();
@@ -88,20 +90,21 @@ public class MinestomCreatureManager implements CreatureManager<Instance, Entity
             entity = new EntityCreature(type);
         }
 
-        entity.setInstance(instance, position(position));
-        return new MinestomCreature(entity.getUuid(), entity, creature);
+        entity.setInstance(instance, position(position)).join(); // TODO not this
+
+        return new MinestomCreature(entity.getUuid(), entity, creature, spawn);
     }
 
     // SPAWNS
 
     @Override
     public MinestomCreature spawn(@NotNull Position position, @NotNull Instance instance, @NotNull EntityType type) {
-        return spawn(position, instance, type, null);
+        return spawn(position, instance, type, null, null);
     }
 
     @Override
     public MinestomCreature spawn(@NotNull Position position, @NotNull Instance instance, @NotNull PersistentCreature creature) {
-        return spawn(position, instance, EntityType.fromNamespaceId(creature.type()), creature);
+        return spawn(position, instance, EntityType.fromNamespaceId(creature.type()), creature, null);
     }
 
     // PERSISTENT CREATURES
@@ -132,18 +135,25 @@ public class MinestomCreatureManager implements CreatureManager<Instance, Entity
 
     @Override
     public CompletableFuture<Void> persist(@NotNull PersistentCreature creature) {
+        refresh(creature);
         return databaseContext.persistAsync(creature);
     }
 
     @Override
     public CompletableFuture<Void> remove(@NotNull PersistentCreature creature) {
         persistentCreatures.remove(creature);
-        spawnedCreatures.stream().filter(c -> c.persistentCreature().equals(creature)).findFirst()
-                .ifPresent(c -> {
+        spawnedCreatures.stream().filter(c -> creature.equals(c.persistentCreature()))
+                .toList().forEach(c -> {
                     c.despawn();
                     spawnedCreatures.remove(c);
                 });
         return databaseContext.removeAsync(creature);
+    }
+
+    @Override
+    public void refresh(@NotNull PersistentCreature creature) {
+        spawnedCreatures.stream().filter(c -> creature.equals(c.persistentCreature()))
+                .forEach(MinestomCreature::refresh);
     }
 
     // PERSISTENT SPAWNS
@@ -168,13 +178,20 @@ public class MinestomCreatureManager implements CreatureManager<Instance, Entity
 
     @Override
     public CompletableFuture<Void> persist(@NotNull PersistentSpawn spawn) {
+        refresh(spawn);
         return databaseContext.persistAsync(spawn);
+    }
+
+    @Override
+    public void refresh(@NotNull PersistentSpawn spawn) {
+        spawnedCreatures.stream().filter(c -> spawn.equals(c.persistentSpawn()))
+                .forEach(MinestomCreature::refresh);
     }
 
     @Override
     public CompletableFuture<Void> remove(@NotNull PersistentSpawn spawn) {
         persistentSpawns.remove(spawn);
-        spawnedCreatures.stream().filter(c -> c.spawn().equals(spawn)).findFirst()
+        spawnedCreatures.stream().filter(c -> spawn.equals(c.persistentSpawn())).findFirst()
                 .ifPresent(c -> {
                     c.despawn();
                     spawnedCreatures.remove(c);
