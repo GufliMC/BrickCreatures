@@ -36,12 +36,12 @@ minestomExtension {
     dependencies = ["BrickI18n"]
 }
 
-shadowJar.doLast {
-    copy {
-        from "build/libs/" + archiveFileName.get()
-        into 'D:\\Documents\\testservers\\WollyMC\\lobby2\\extensions'
-    }
-}
+//shadowJar.doLast {
+//    copy {
+//        from "build/libs/" + archiveFileName.get()
+//        into 'D:\\Documents\\testservers\\WollyMC\\lobby2\\extensions'
+//    }
+//}
 
 //
 //println project.configurations.runtimeClasspath.getResolvedConfiguration().getLenientConfiguration()

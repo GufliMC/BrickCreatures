@@ -11,7 +11,7 @@ import com.guflimc.brick.creatures.minestom.commands.MinestomCreaturesCommands;
 import com.guflimc.brick.creatures.minestom.metadata.MinestomMetadataSerializer;
 import com.guflimc.brick.i18n.minestom.api.MinestomI18nAPI;
 import com.guflimc.brick.i18n.minestom.api.namespace.MinestomNamespace;
-import io.github.openminigameserver.cloudminestom.MinestomCommandManager;
+import com.guflimc.cloud.minestom.MinestomCommandManager;
 import net.minestom.server.command.CommandSender;
 import net.minestom.server.extensions.Extension;
 

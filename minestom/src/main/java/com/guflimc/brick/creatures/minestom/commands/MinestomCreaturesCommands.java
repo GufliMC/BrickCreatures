@@ -33,7 +33,7 @@ public class MinestomCreaturesCommands {
     public List<String> creatureSuggestion(CommandContext<Audience> sender, String input) {
         return manager.creatures().stream()
                 .map(PersistentCreature::name)
-                .filter(name -> name.startsWith(input))
+//                .filter(name -> name.startsWith(input))
                 .collect(Collectors.toList());
     }
 
@@ -41,27 +41,19 @@ public class MinestomCreaturesCommands {
     public List<String> spawnSuggestion(CommandContext<Audience> sender, String input) {
         return manager.spawns().stream()
                 .map(PersistentSpawn::name)
-                .filter(name -> name.startsWith(input))
-                .collect(Collectors.toList());
-    }
-
-    @Suggestions("entityType")
-    public List<String> entityTypeSuggestion(CommandContext<Audience> sender, String input) {
-        return EntityType.values().stream()
-                .map(ProtocolObject::name)
-                .filter(name -> name.startsWith(input))
+//                .filter(name -> name.startsWith(input))
                 .collect(Collectors.toList());
     }
 
     @CommandMethod("bc creature create <name> <type>")
-    public void creatureCreate(Audience sender, @Argument(value = "name") String name, @Argument(value = "type") String type) {
+    public void creatureCreate(Audience sender, @Argument(value = "name") String name, @Argument(value = "type") EntityType type) {
         if (manager.creature(name).isPresent()) {
             I18nAPI.get(this).send(sender, "cmd.creature.create.invalid", name);
             return;
         }
 
-        manager.persist(name, EntityType.fromNamespaceId(type));
-        I18nAPI.get(this).send(sender, "cmd.creature.create", name, type);
+        manager.persist(name, type);
+        I18nAPI.get(this).send(sender, "cmd.creature.create", name, type.name());
     }
 
     @CommandMethod("bc creature delete <creature>")

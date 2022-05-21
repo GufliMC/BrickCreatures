@@ -9,6 +9,8 @@
   "cmd.creature.create": "<green>Created creature {0} of type {1}.",
   "cmd.creature.create.invalid": "<red>A creature with that name already exists.",
 
+  "cmd.creature.delete": "<green>Deleted {0}.",
+
   "cmd.creature.list": "<green>List of creatures: {0}",
 
   "cmd.creature.edit.skin.invalid": "<red>{0} is not an existing player.",
