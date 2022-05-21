@@ -56,7 +56,12 @@ public abstract class HibernateDatabaseContext {
                 Transaction tx = session.beginTransaction();
                 consumer.accept(session);
                 tx.commit();
+            } catch (Exception e) {
+                e.printStackTrace();
             }
+        }).exceptionally(ex -> {
+            ex.printStackTrace();
+            return null;
         });
     }
 
@@ -67,11 +72,18 @@ public abstract class HibernateDatabaseContext {
             ) {
                 return session.find(entityType, id);
             }
+        }).exceptionally(ex -> {
+            ex.printStackTrace();
+            return null;
         });
     }
 
     public final CompletableFuture<Void> persistAsync(Object object) {
         return async((session -> session.persist(object)));
+    }
+
+    public final CompletableFuture<Void> mergeAsync(Object object) {
+        return async((session -> session.merge(object)));
     }
 
     public final CompletableFuture<Void> removeAsync(Object object) {

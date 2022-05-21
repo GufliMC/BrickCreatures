@@ -134,9 +134,9 @@ public class MinestomCreatureManager implements CreatureManager<Instance, Entity
     }
 
     @Override
-    public CompletableFuture<Void> persist(@NotNull PersistentCreature creature) {
+    public CompletableFuture<Void> merge(@NotNull PersistentCreature creature) {
         refresh(creature);
-        return databaseContext.persistAsync(creature);
+        return databaseContext.mergeAsync(creature);
     }
 
     @Override
@@ -177,9 +177,9 @@ public class MinestomCreatureManager implements CreatureManager<Instance, Entity
     }
 
     @Override
-    public CompletableFuture<Void> persist(@NotNull PersistentSpawn spawn) {
+    public CompletableFuture<Void> merge(@NotNull PersistentSpawn spawn) {
         refresh(spawn);
-        return databaseContext.persistAsync(spawn);
+        return databaseContext.mergeAsync(spawn);
     }
 
     @Override

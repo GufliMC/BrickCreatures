@@ -1,8 +1,10 @@
 package com.guflimc.brick.creatures.common.domain;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
+import org.hibernate.type.SqlTypes;
 
 import java.util.UUID;
 
@@ -15,7 +17,9 @@ import java.util.UUID;
 public class DCreatureTrait {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Basic
+    @GeneratedValue
+    @JdbcTypeCode(SqlTypes.CHAR)
     private UUID id;
 
     @ManyToOne(targetEntity = DCreature.class, optional = false)

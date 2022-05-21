@@ -134,7 +134,7 @@ public class MinestomCreaturesCommands {
         }
 
         creature.get().setSkin(new com.guflimc.brick.creatures.api.meta.PlayerSkin(skin.textures(), skin.signature()));
-        manager.persist(creature.get());
+        manager.merge(creature.get());
 
         I18nAPI.get(this).send(sender, "cmd.creature.edit.skin", creature.get().name());
     }
@@ -149,7 +149,7 @@ public class MinestomCreaturesCommands {
         }
 
         spawn.get().setPosition(manager.position(sender.getPosition()));
-        manager.persist(spawn.get());
+        manager.merge(spawn.get());
 
         I18nAPI.get(this).send(sender, "cmd.spawn.edit.teleporthere", spawn.get().name());
     }
@@ -174,7 +174,7 @@ public class MinestomCreaturesCommands {
         result = result.withPitch(PositionUtils.getLookPitch(delta.x(), delta.y(), delta.z()));
 
         spawn.get().setPosition(manager.position(result));
-        manager.persist(spawn.get());
+        manager.merge(spawn.get());
 
         I18nAPI.get(this).send(sender, "cmd.spawn.edit.lookhere", spawn.get().name());
     }

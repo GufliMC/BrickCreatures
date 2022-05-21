@@ -4,8 +4,10 @@ import com.guflimc.brick.creatures.api.domain.PersistentSpawn;
 import com.guflimc.brick.creatures.api.meta.Position;
 import com.guflimc.brick.creatures.common.converters.PositionConverter;
 import jakarta.persistence.*;
+import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
+import org.hibernate.type.SqlTypes;
 
 import java.util.UUID;
 
@@ -16,7 +18,9 @@ import java.util.UUID;
 public class DSpawn implements PersistentSpawn {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Basic
+    @GeneratedValue
+    @JdbcTypeCode(SqlTypes.CHAR)
     private UUID id;
 
     @Column(nullable = false)

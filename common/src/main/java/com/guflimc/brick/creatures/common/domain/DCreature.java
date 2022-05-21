@@ -8,7 +8,10 @@ import com.guflimc.brick.creatures.common.converters.MetadataConverter;
 import com.guflimc.brick.creatures.common.converters.PlayerSkinConverter;
 import jakarta.persistence.*;
 import net.kyori.adventure.text.Component;
+import org.hibernate.annotations.JdbcTypeCode;
+import org.hibernate.type.SqlTypes;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -19,7 +22,9 @@ import java.util.UUID;
 public class DCreature implements PersistentCreature {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Basic
+    @GeneratedValue
+    @JdbcTypeCode(SqlTypes.CHAR)
     private UUID id;
 
     @Column(nullable = false)
@@ -32,6 +37,7 @@ public class DCreature implements PersistentCreature {
     private Component hologram;
 
     @Convert(converter = PlayerSkinConverter.class)
+    @Column(length = 65535)
     private PlayerSkin skin;
 
     @Convert(converter = MetadataConverter.class)
@@ -39,7 +45,7 @@ public class DCreature implements PersistentCreature {
 
     @OneToMany(targetEntity = DCreatureTrait.class, mappedBy = "creature", orphanRemoval = true,
             cascade = { CascadeType.REMOVE, CascadeType.PERSIST })
-    private List<DCreatureTrait> traits;
+    private final List<DCreatureTrait> traits = new ArrayList<>();
 
     //
 
