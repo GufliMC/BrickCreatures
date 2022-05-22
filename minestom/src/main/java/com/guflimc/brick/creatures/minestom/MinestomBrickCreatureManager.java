@@ -8,6 +8,7 @@ import com.guflimc.brick.creatures.api.meta.Position;
 import com.guflimc.brick.creatures.common.BrickDatabaseContext;
 import com.guflimc.brick.creatures.common.domain.DCreature;
 import com.guflimc.brick.creatures.common.domain.DSpawn;
+import com.guflimc.brick.creatures.minestom.api.MinestomCreatureManager;
 import com.guflimc.brick.creatures.minestom.creature.MinestomCreature;
 import com.guflimc.brick.creatures.minestom.creature.player.FakeFakePlayer;
 import jakarta.persistence.TypedQuery;
@@ -28,7 +29,7 @@ import java.util.Set;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CopyOnWriteArraySet;
 
-public class MinestomCreatureManager implements CreatureManager<Instance, EntityCreature, EntityType> {
+public class MinestomBrickCreatureManager implements MinestomCreatureManager {
 
     private final BrickDatabaseContext databaseContext;
 
@@ -37,7 +38,7 @@ public class MinestomCreatureManager implements CreatureManager<Instance, Entity
 
     private final Set<MinestomCreature> spawnedCreatures = new CopyOnWriteArraySet<>();
 
-    public MinestomCreatureManager(BrickDatabaseContext databaseContext) {
+    public MinestomBrickCreatureManager(BrickDatabaseContext databaseContext) {
         this.databaseContext = databaseContext;
 
         databaseContext.queryBuilder((session, cb) -> {

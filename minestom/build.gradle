@@ -8,7 +8,7 @@ repositories {
 
 dependencies {
     // provided by platform
-    compileOnly 'com.github.Minestom:Minestom:-SNAPSHOT'
+    compileOnly 'com.github.Minestom:Minestom:f80f653ee0'
     implementation 'com.google.code.gson:gson:2.+'
 
     // provided by extensions
@@ -23,6 +23,7 @@ dependencies {
     implementation (project(':common')) {
         exclude group: 'com.guflimc.brick.i18n'
     }
+    implementation project(':minestom-api')
 
     implementation 'cloud.commandframework:cloud-core:+'
     implementation 'cloud.commandframework:cloud-annotations:+'
@@ -36,12 +37,12 @@ minestomExtension {
     dependencies = ["BrickI18n"]
 }
 
-//shadowJar.doLast {
-//    copy {
-//        from "build/libs/" + archiveFileName.get()
-//        into 'D:\\Documents\\testservers\\WollyMC\\lobby2\\extensions'
-//    }
-//}
+shadowJar.doLast {
+    copy {
+        from "build/libs/" + archiveFileName.get()
+        into 'D:\\Documents\\testservers\\WollyMC\\lobby\\extensions'
+    }
+}
 
 //
 //println project.configurations.runtimeClasspath.getResolvedConfiguration().getLenientConfiguration()

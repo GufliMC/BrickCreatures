@@ -6,7 +6,7 @@ import cloud.commandframework.annotations.suggestions.Suggestions;
 import cloud.commandframework.context.CommandContext;
 import com.guflimc.brick.creatures.api.domain.PersistentCreature;
 import com.guflimc.brick.creatures.api.domain.PersistentSpawn;
-import com.guflimc.brick.creatures.minestom.MinestomCreatureManager;
+import com.guflimc.brick.creatures.minestom.MinestomBrickCreatureManager;
 import com.guflimc.brick.i18n.api.I18nAPI;
 import net.kyori.adventure.audience.Audience;
 import net.minestom.server.coordinate.Pos;
@@ -14,7 +14,6 @@ import net.minestom.server.coordinate.Vec;
 import net.minestom.server.entity.EntityType;
 import net.minestom.server.entity.Player;
 import net.minestom.server.entity.PlayerSkin;
-import net.minestom.server.registry.ProtocolObject;
 import net.minestom.server.utils.position.PositionUtils;
 
 import java.util.List;
@@ -23,9 +22,9 @@ import java.util.stream.Collectors;
 
 public class MinestomCreaturesCommands {
 
-    private final MinestomCreatureManager manager;
+    private final MinestomBrickCreatureManager manager;
 
-    public MinestomCreaturesCommands(MinestomCreatureManager manager) {
+    public MinestomCreaturesCommands(MinestomBrickCreatureManager manager) {
         this.manager = manager;
     }
 
@@ -57,32 +56,20 @@ public class MinestomCreaturesCommands {
     }
 
     @CommandMethod("bc creature delete <creature>")
-    public void creatureDelete(Audience sender, @Argument(value = "creature", suggestions = "creature") String name) {
-        Optional<PersistentCreature> creature = manager.creature(name);
-        if (creature.isEmpty()) {
-            I18nAPI.get(this).send(sender, "cmd.error.args.creature", name);
-            return;
-        }
-
-        manager.remove(creature.get());
-        I18nAPI.get(this).send(sender, "cmd.creature.delete", creature.get().name());
+    public void creatureDelete(Audience sender, @Argument(value = "creature") PersistentCreature creature) {
+        manager.remove(creature);
+        I18nAPI.get(this).send(sender, "cmd.creature.delete", creature.name());
     }
 
     @CommandMethod("bc spawn create <name> <creature>")
-    public void spawnCreate(Player sender, @Argument(value = "name") String name, @Argument(value = "creature", suggestions = "creature") String creature) {
+    public void spawnCreate(Player sender, @Argument(value = "name") String name, @Argument(value = "creature") PersistentCreature creature) {
         if (manager.spawn(name).isPresent()) {
             I18nAPI.get(this).send(sender, "cmd.spawn.create.invalid", name);
             return;
         }
 
-        Optional<PersistentCreature> creatureOptional = manager.creature(creature);
-        if (creatureOptional.isEmpty()) {
-            I18nAPI.get(this).send(sender, "cmd.error.args.creature", name);
-            return;
-        }
-
-        manager.persist(name, creatureOptional.get(), manager.position(sender.getPosition()), sender.getInstance());
-        I18nAPI.get(this).send(sender, "cmd.spawn.create", name, creatureOptional.get().name());
+        manager.persist(name, creature, manager.position(sender.getPosition()), sender.getInstance());
+        I18nAPI.get(this).send(sender, "cmd.spawn.create", name, creature.name());
     }
 
     @CommandMethod("bc spawn delete <spawn>")
@@ -111,24 +98,18 @@ public class MinestomCreaturesCommands {
 
     @CommandMethod("bc creature edit skin <creature> <player>")
     public void creatureEditSkin(Audience sender,
-                                 @Argument(value = "creature", suggestions = "creature") String creatureName,
+                                 @Argument(value = "creature") PersistentCreature creature,
                                  @Argument(value = "player") String playerName) {
-        Optional<PersistentCreature> creature = manager.creature(creatureName);
-        if (creature.isEmpty()) {
-            I18nAPI.get(this).send(sender, "cmd.error.args.creature", creatureName);
-            return;
-        }
-
         PlayerSkin skin = PlayerSkin.fromUsername(playerName);
         if (skin == null) {
             I18nAPI.get(this).send(sender, "cmd.creature.edit.skin.invalid", playerName);
             return;
         }
 
-        creature.get().setSkin(new com.guflimc.brick.creatures.api.meta.PlayerSkin(skin.textures(), skin.signature()));
-        manager.merge(creature.get());
+        creature.setSkin(new com.guflimc.brick.creatures.api.meta.PlayerSkin(skin.textures(), skin.signature()));
+        manager.merge(creature);
 
-        I18nAPI.get(this).send(sender, "cmd.creature.edit.skin", creature.get().name());
+        I18nAPI.get(this).send(sender, "cmd.creature.edit.skin", creature.name());
     }
 
     @CommandMethod("bc spawn edit tphere <spawn>")
