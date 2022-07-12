@@ -1,15 +1,14 @@
 package com.guflimc.brick.creatures.common.domain;
 
-import com.guflimc.brick.creatures.api.domain.PersistentCreature;
-import com.guflimc.brick.creatures.api.domain.Trait;
-import com.guflimc.brick.creatures.api.meta.PlayerSkin;
-import com.guflimc.brick.creatures.common.converters.ComponentConverter;
-import com.guflimc.brick.creatures.common.converters.MetadataConverter;
-import com.guflimc.brick.creatures.common.converters.PlayerSkinConverter;
+import com.guflimc.brick.creatures.api.domain.Creature;
+import com.guflimc.brick.creatures.common.converters.NBTConverter;
+import com.guflimc.brick.maths.api.geo.Location;
+import com.guflimc.brick.maths.api.geo.Position;
+import com.guflimc.brick.maths.database.api.LocationConverter;
 import jakarta.persistence.*;
-import net.kyori.adventure.text.Component;
 import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.type.SqlTypes;
+import org.jglrxavpok.hephaistos.nbt.NBTCompound;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,7 +18,7 @@ import java.util.UUID;
 @Table(name = "creatures", uniqueConstraints = {
         @UniqueConstraint(columnNames = {"name"})
 })
-public class DCreature implements PersistentCreature {
+public class DCreature implements Creature {
 
     @Id
     @Basic
@@ -33,27 +32,34 @@ public class DCreature implements PersistentCreature {
     @Column(nullable = false)
     private String type;
 
-    @Convert(converter = ComponentConverter.class)
-    private Component hologram;
+    @Convert(converter = LocationConverter.class)
+    @Column(nullable = false)
+    public Location location = new Location(null, 0, 0, 0, 0, 0);
 
-    @Convert(converter = PlayerSkinConverter.class)
-    @Column(length = 65535)
-    private PlayerSkin skin;
+    @Convert(converter = NBTConverter.class)
+    private NBTCompound nbt;
 
-    @Convert(converter = MetadataConverter.class)
-    private Object metadata;
-
-    @OneToMany(targetEntity = DCreatureTrait.class, mappedBy = "creature", orphanRemoval = true,
-            cascade = { CascadeType.REMOVE, CascadeType.PERSIST })
+    @OneToMany(targetEntity = DCreatureTrait.class, mappedBy = "creature",
+            orphanRemoval = true, fetch = FetchType.EAGER,
+            cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE})
     private final List<DCreatureTrait> traits = new ArrayList<>();
 
     //
 
     private DCreature() {}
 
-    public DCreature(String name, String type) {
-        this.name = name;
+    public DCreature(String type) {
         this.type = type;
+    }
+
+    public DCreature(String name, String type) {
+        this(type);
+        this.name = name;
+    }
+
+    @Override
+    public UUID id() {
+        return id;
     }
 
     @Override
@@ -61,53 +67,42 @@ public class DCreature implements PersistentCreature {
         return name;
     }
 
+    @Override
+    public Position position() {
+        return location;
+    }
+
+    @Override
+    public void setPosition(Position position) {
+        this.location = location.withPosition(position);
+    }
+
+    @Override
+    public NBTCompound nbt() {
+        return nbt;
+    }
+
+    @Override
+    public void setNBT(NBTCompound nbt) {
+        this.nbt = nbt;
+    }
+
     public String type() {
         return type;
     }
 
-    @Override
-    public Component hologram() {
-        return hologram;
-    }
-
-    @Override
-    public PlayerSkin skin() {
-        return skin;
-    }
-
-    @Override
-    public void setSkin(PlayerSkin skin) {
-        this.skin = skin;
-    }
-
-    @Override
-    public Object metadata() {
-        return metadata;
-    }
-
-    @Override
-    public void setMetadata(Object metadata) {
-        this.metadata = metadata;
-    }
-
-    @Override
-    public void setHologram(Component hologram) {
-        this.hologram = hologram;
-    }
-
     public List<String> traits() {
-        return traits.stream().map(DCreatureTrait::traitId).toList();
+        return traits.stream().map(DCreatureTrait::trait).toList();
     }
 
     @Override
-    public void addTrait(Trait trait) {
-        traits.add(new DCreatureTrait(this, trait.id()));
+    public void addTrait(String trait) {
+        traits.add(new DCreatureTrait(this, trait));
     }
 
     @Override
-    public void removeTrait(Trait trait) {
-        traits.removeIf(t -> t.traitId().equals(trait.id()));
+    public void removeTrait(String trait) {
+        traits.removeIf(t -> t.trait().equals(trait));
     }
-
 
 }

@@ -1,203 +1,133 @@
 package com.guflimc.brick.creatures.minestom;
 
-import com.guflimc.brick.creatures.api.CreatureManager;
 import com.guflimc.brick.creatures.api.domain.Creature;
-import com.guflimc.brick.creatures.api.domain.PersistentCreature;
-import com.guflimc.brick.creatures.api.domain.PersistentSpawn;
-import com.guflimc.brick.creatures.api.meta.Position;
-import com.guflimc.brick.creatures.common.BrickDatabaseContext;
+import com.guflimc.brick.creatures.api.domain.TraitLifecycle;
+import com.guflimc.brick.creatures.common.BrickCreaturesDatabaseContext;
 import com.guflimc.brick.creatures.common.domain.DCreature;
-import com.guflimc.brick.creatures.common.domain.DSpawn;
 import com.guflimc.brick.creatures.minestom.api.MinestomCreatureManager;
-import com.guflimc.brick.creatures.minestom.creature.MinestomCreature;
-import com.guflimc.brick.creatures.minestom.creature.player.FakeFakePlayer;
-import jakarta.persistence.TypedQuery;
-import jakarta.persistence.criteria.CriteriaQuery;
-import jakarta.persistence.criteria.Root;
+import com.guflimc.brick.creatures.minestom.api.domain.MinestomCreature;
+import com.guflimc.brick.creatures.minestom.domain.MinestomBrickCreature;
+import com.guflimc.brick.worlds.api.world.World;
+import com.guflimc.brick.worlds.minestom.api.MinestomWorldAPI;
+import com.guflimc.brick.worlds.minestom.api.event.WorldLoadEvent;
+import com.guflimc.brick.worlds.minestom.api.world.MinestomWorld;
 import net.minestom.server.MinecraftServer;
-import net.minestom.server.coordinate.Pos;
-import net.minestom.server.entity.EntityCreature;
+import net.minestom.server.entity.Entity;
 import net.minestom.server.entity.EntityType;
-import net.minestom.server.instance.Instance;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CopyOnWriteArraySet;
+import java.util.function.Function;
 
 public class MinestomBrickCreatureManager implements MinestomCreatureManager {
 
-    private final BrickDatabaseContext databaseContext;
+    private final Logger logger = LoggerFactory.getLogger(MinestomBrickCreatureManager.class);
 
-    private final Set<PersistentCreature> persistentCreatures = new CopyOnWriteArraySet<>();
-    private final Set<PersistentSpawn> persistentSpawns = new CopyOnWriteArraySet<>();
+    private final BrickCreaturesDatabaseContext databaseContext;
 
-    private final Set<MinestomCreature> spawnedCreatures = new CopyOnWriteArraySet<>();
+    private final Set<MinestomBrickCreature> creatures = new CopyOnWriteArraySet<>();
+    private final Map<String, Function<Entity, TraitLifecycle<MinestomCreature>>> traits = new ConcurrentHashMap<>();
 
-    public MinestomBrickCreatureManager(BrickDatabaseContext databaseContext) {
+    public MinestomBrickCreatureManager(BrickCreaturesDatabaseContext databaseContext) {
         this.databaseContext = databaseContext;
 
-        databaseContext.queryBuilder((session, cb) -> {
-            // creatures
-            CriteriaQuery<DCreature> creatureQuery = cb.createQuery(DCreature.class);
-            Root<DCreature> creatureRoot = creatureQuery.from(DCreature.class);
-            creatureQuery = creatureQuery.select(creatureRoot);
+        // spawn holograms that are assigned to a world when a world is loaded
+        if (MinecraftServer.getExtensionManager().hasExtension("brickworlds")) {
+            MinecraftServer.getGlobalEventHandler().addListener(WorldLoadEvent.class, e -> load(e.world()));
+        }
 
-            TypedQuery<DCreature> creatureAllQuery = session.createQuery(creatureQuery);
-            persistentCreatures.addAll(creatureAllQuery.getResultList());
-
-            // spawns
-            CriteriaQuery<DSpawn> spawnQuery = cb.createQuery(DSpawn.class);
-            Root<DSpawn> spawnRoot = spawnQuery.from(DSpawn.class);
-            spawnQuery = spawnQuery.select(spawnRoot);
-
-            TypedQuery<DSpawn> spawnAllQuery = session.createQuery(spawnQuery);
-            persistentSpawns.addAll(spawnAllQuery.getResultList());
-            persistentSpawns.forEach(persistentSpawn -> spawnPersistedCreature(persistentSpawn, defaultInstance()));
-        });
+        reload();
     }
 
-    private Instance defaultInstance() {
-        return MinecraftServer.getInstanceManager().getInstances().stream().findFirst().orElseThrow();
+    private void load(World world) {
+        logger.info("Loading creatures for world '{}'.", world.info().name());
+        creatures.stream().filter(c -> c.instance() == null)
+                .filter(c -> c.domainCreature().location != null && c.domainCreature().location.worldName() != null)
+                .filter(c -> c.domainCreature().location.worldName().equals(world.info().name()))
+                .forEach(h -> {
+                    h.setInstance(((MinestomWorld) world).asInstance());
+                });
     }
 
-    public Pos position(Position position) {
-        return new Pos(position.x(), position.y(), position.z(), position.yaw(), position.pitch());
+    @Override
+    public void reload() {
+        // load holograms from database
+        databaseContext.findAllAsync(DCreature.class).join().stream()
+                .map(MinestomBrickCreature::new)
+                .forEach(crea -> {
+                    // remove old one with same id
+                    creatures.stream().filter(c -> c.id().equals(crea.id())).toList().forEach(c -> {
+                        c.despawn();
+                        creatures.remove(c);
+                    });
+
+                    creatures.add(crea);
+                });
+
+        // set instance of holograms that are assigned to a world
+        if (MinecraftServer.getExtensionManager().hasExtension("brickworlds")) {
+            MinestomWorldAPI.get().loadedWorlds().forEach(this::load);
+        }
     }
 
-    public Position position(Pos pos) {
-        return new Position(pos.x(), pos.y(), pos.z(), pos.yaw(), pos.pitch());
+    @Override
+    public Collection<Creature> creatures() {
+        return Collections.unmodifiableSet(creatures);
     }
 
-    // SPAWNS
+    @Override
+    public Optional<Creature> find(String name) {
+        return creatures.stream().filter(c -> c.domainCreature().name().equals(name))
+                .findFirst().map(c -> c);
+    }
 
-    private MinestomCreature spawnPersistedCreature(@NotNull PersistentSpawn spawn, @NotNull Instance instance) {
-        MinestomCreature creature = spawn(spawn.position(), instance, EntityType.fromNamespaceId(spawn.creature().type()),
-                spawn.creature(), spawn);
-        spawnedCreatures.add(creature);
+    @Override
+    public MinestomCreature create(@NotNull EntityType type) {
+        MinestomBrickCreature creature = new MinestomBrickCreature(new DCreature(type.name()));
+        creatures.add(creature);
         return creature;
     }
 
-    private MinestomCreature spawn(@NotNull Position position, @NotNull Instance instance, @NotNull EntityType type,
-                                   @Nullable PersistentCreature creature, @Nullable PersistentSpawn spawn) {
-        EntityCreature entity;
-        if (type == EntityType.PLAYER) {
-            entity = new FakeFakePlayer();
-        } else {
-            entity = new EntityCreature(type);
-        }
-
-        entity.setInstance(instance, position(position)).join(); // TODO not this
-
-        return new MinestomCreature(entity.getUuid(), entity, creature, spawn);
-    }
-
-    // SPAWNS
-
     @Override
-    public MinestomCreature spawn(@NotNull Position position, @NotNull Instance instance, @NotNull EntityType type) {
-        return spawn(position, instance, type, null, null);
+    public MinestomCreature create(@NotNull String name, @NotNull EntityType type) {
+        MinestomBrickCreature creature = new MinestomBrickCreature(new DCreature(name, type.name()));
+        creatures.add(creature);
+        return creature;
     }
 
     @Override
-    public MinestomCreature spawn(@NotNull Position position, @NotNull Instance instance, @NotNull PersistentCreature creature) {
-        return spawn(position, instance, EntityType.fromNamespaceId(creature.type()), creature, null);
-    }
-
-    // PERSISTENT CREATURES
-
-    @Override
-    public Collection<PersistentCreature> creatures() {
-        return Collections.unmodifiableCollection(persistentCreatures);
+    public CompletableFuture<Void> persist(@NotNull Creature creature) {
+        return databaseContext.persistAsync(((MinestomBrickCreature) creature).domainCreature());
     }
 
     @Override
-    public Optional<PersistentCreature> creature(@NotNull String id) {
-        return persistentCreatures.stream().filter(c -> c.name().equals(id)).findFirst();
+    public CompletableFuture<Void> remove(@NotNull Creature creature) {
+        MinestomBrickCreature crea = (MinestomBrickCreature) creature;
+        crea.despawn();
+
+        this.creatures.remove(crea);
+        return databaseContext.removeAsync(crea.domainCreature());
     }
 
     @Override
-    public CompletableFuture<PersistentCreature> persist(@NotNull String id, @NotNull Creature<EntityCreature> creature) {
-        DCreature dcreature = new DCreature(id, creature.entity().getEntityType().name());
-        persistentCreatures.add(dcreature);
-        return databaseContext.persistAsync(dcreature).thenApply(v -> dcreature);
+    public CompletableFuture<Void> merge(@NotNull Creature creature) {
+        MinestomBrickCreature crea = (MinestomBrickCreature) creature;
+        return databaseContext.mergeAsync(crea.domainCreature()).thenAccept(crea::setDomainCreature);
     }
 
     @Override
-    public CompletableFuture<PersistentCreature> persist(@NotNull String id, @NotNull EntityType type) {
-        DCreature creature = new DCreature(id, type.name());
-        persistentCreatures.add(creature);
-        return databaseContext.persistAsync(creature).thenApply(v -> creature);
+    public void registerTrait(String name, Function<Entity, TraitLifecycle<MinestomCreature>> creator) {
+        traits.put(name, creator);
     }
 
     @Override
-    public CompletableFuture<Void> merge(@NotNull PersistentCreature creature) {
-        refresh(creature);
-        return databaseContext.mergeAsync(creature);
-    }
-
-    @Override
-    public CompletableFuture<Void> remove(@NotNull PersistentCreature creature) {
-        persistentCreatures.remove(creature);
-        spawnedCreatures.stream().filter(c -> creature.equals(c.persistentCreature()))
-                .toList().forEach(c -> {
-                    c.despawn();
-                    spawnedCreatures.remove(c);
-                });
-        return databaseContext.removeAsync(creature);
-    }
-
-    @Override
-    public void refresh(@NotNull PersistentCreature creature) {
-        spawnedCreatures.stream().filter(c -> creature.equals(c.persistentCreature()))
-                .forEach(MinestomCreature::refresh);
-    }
-
-    // PERSISTENT SPAWNS
-
-    @Override
-    public Collection<PersistentSpawn> spawns() {
-        return Collections.unmodifiableCollection(persistentSpawns);
-    }
-
-    @Override
-    public Optional<PersistentSpawn> spawn(@NotNull String id) {
-        return persistentSpawns.stream().filter(s -> s.name().equals(id)).findFirst();
-    }
-
-    @Override
-    public CompletableFuture<PersistentSpawn> persist(@NotNull String id, @NotNull PersistentCreature creature, @NotNull Position position, @NotNull Instance instance) {
-        DSpawn spawn = new DSpawn(id, (DCreature) creature, position);
-        persistentSpawns.add(spawn);
-        spawnPersistedCreature(spawn, instance);
-        return databaseContext.persistAsync(spawn).thenApply(v -> spawn);
-    }
-
-    @Override
-    public CompletableFuture<Void> merge(@NotNull PersistentSpawn spawn) {
-        refresh(spawn);
-        return databaseContext.mergeAsync(spawn);
-    }
-
-    @Override
-    public void refresh(@NotNull PersistentSpawn spawn) {
-        spawnedCreatures.stream().filter(c -> spawn.equals(c.persistentSpawn()))
-                .forEach(MinestomCreature::refresh);
-    }
-
-    @Override
-    public CompletableFuture<Void> remove(@NotNull PersistentSpawn spawn) {
-        persistentSpawns.remove(spawn);
-        spawnedCreatures.stream().filter(c -> spawn.equals(c.persistentSpawn())).findFirst()
-                .ifPresent(c -> {
-                    c.despawn();
-                    spawnedCreatures.remove(c);
-                });
-        return databaseContext.removeAsync(spawn);
+    public void unregisterTrait(String name) {
+        traits.remove(name);
     }
 
 }

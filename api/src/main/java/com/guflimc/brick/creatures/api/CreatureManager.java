@@ -1,54 +1,35 @@
 package com.guflimc.brick.creatures.api;
 
 import com.guflimc.brick.creatures.api.domain.Creature;
-import com.guflimc.brick.creatures.api.domain.PersistentCreature;
-import com.guflimc.brick.creatures.api.domain.PersistentSpawn;
-import com.guflimc.brick.creatures.api.meta.Position;
+import com.guflimc.brick.creatures.api.domain.TraitLifecycle;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Collection;
 import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
+import java.util.function.Function;
 
-public interface CreatureManager<WORLD, ENTITY, ENTITYTYPE> {
+public interface CreatureManager<C extends Creature, E, T> {
 
-    // normal spawns
+    void reload();
 
-    Creature<ENTITY> spawn(@NotNull Position position, @NotNull WORLD world, @NotNull ENTITYTYPE type);
+    Collection<Creature> creatures();
 
-    Creature<ENTITY> spawn(@NotNull Position position, @NotNull WORLD world, @NotNull PersistentCreature creature);
+    Optional<Creature> find(String name);
 
-    // persistent creature
+    C create(@NotNull T type);
 
-    Collection<PersistentCreature> creatures();
+    C create(@NotNull String name, @NotNull T type);
 
-    Optional<PersistentCreature> creature(@NotNull String id);
+    CompletableFuture<Void> persist(@NotNull Creature creature);
 
-    CompletableFuture<PersistentCreature> persist(@NotNull String id, @NotNull Creature<ENTITY> creature);
+    CompletableFuture<Void> remove(@NotNull Creature creature);
 
-    CompletableFuture<PersistentCreature> persist(@NotNull String id, @NotNull ENTITYTYPE type);
+    CompletableFuture<Void> merge(@NotNull Creature creature);
 
-    CompletableFuture<Void> merge(@NotNull PersistentCreature creature);
+    void registerTrait(String name, Function<E, TraitLifecycle<C>> creator);
 
-    CompletableFuture<Void> remove(@NotNull PersistentCreature creature);
-
-    void refresh(@NotNull PersistentCreature creature);
-
-    // persistent spawn
-
-    Collection<PersistentSpawn> spawns();
-
-    Optional<PersistentSpawn> spawn(@NotNull String id);
-
-    CompletableFuture<PersistentSpawn> persist(@NotNull String id, @NotNull PersistentCreature creature,
-                                               @NotNull Position position, @NotNull WORLD world);
-
-    CompletableFuture<Void> remove(@NotNull PersistentSpawn spawn);
-
-    CompletableFuture<Void> merge(@NotNull PersistentSpawn spawn);
-
-    void refresh(@NotNull PersistentSpawn spawn);
-
+    void unregisterTrait(String name);
 
 
 }

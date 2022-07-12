@@ -1,21 +1,29 @@
 package com.guflimc.brick.creatures.api.domain;
 
-import net.kyori.adventure.text.Component;
+import com.guflimc.brick.maths.api.geo.Position;
+import org.jglrxavpok.hephaistos.nbt.NBTCompound;
 
+import java.util.List;
 import java.util.UUID;
 
-public interface Creature<T> {
+public interface Creature {
 
     UUID id();
 
-    T entity();
+    String name();
 
-    void setHologram(Component hologram);
+    Position position();
 
-    void addTrait(Trait trait);
+    void setPosition(Position position);
 
-    void despawn();
+    NBTCompound nbt();
 
-    void refresh();
+    void setNBT(NBTCompound nbt);
+
+    List<String> traits();
+
+    void addTrait(String trait);
+
+    void removeTrait(String trait);
 
 }

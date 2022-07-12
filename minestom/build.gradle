@@ -13,6 +13,7 @@ dependencies {
 
     // provided by extensions
     compileOnly 'com.guflimc.brick.i18n:minestom-api:+'
+    compileOnly 'com.guflimc.brick.worlds:minestom-api:+'
 
     // external library
     library 'org.apache.commons:commons-lang3:3.12.0'
@@ -28,19 +29,21 @@ dependencies {
     implementation 'cloud.commandframework:cloud-core:+'
     implementation 'cloud.commandframework:cloud-annotations:+'
     implementation 'com.guflimc.cloud:cloud-minestom:+'
+
+    implementation 'com.guflimc.brick.maths:minestom-api:+'
 }
 
 
 minestomExtension {
     name = rootProject.name
     entrypoint = "com.guflimc.brick.creatures.minestom.MinestomBrickCreatures"
-    dependencies = ["BrickI18n"]
+    dependencies = ["BrickI18n", "BrickWorlds"]
 }
 
 shadowJar.doLast {
     copy {
         from "build/libs/" + archiveFileName.get()
-        into 'D:\\Documents\\testservers\\WollyMC\\lobby\\extensions'
+        into 'C:\\Users\\joris\\Nextcloud\\WollyMC\\testservers\\lobby\\extensions'
     }
 }
 

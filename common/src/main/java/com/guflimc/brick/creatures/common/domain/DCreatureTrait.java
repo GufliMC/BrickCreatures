@@ -1,41 +1,36 @@
 package com.guflimc.brick.creatures.common.domain;
 
 import jakarta.persistence.*;
-import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
-import org.hibernate.type.SqlTypes;
-
-import java.util.UUID;
 
 @Entity
 @Table(name = "creature_traits",
         uniqueConstraints = {
-                @UniqueConstraint(columnNames = {"trait_id", "creature_id"})
+                @UniqueConstraint(columnNames = {"trait", "creature_id"})
         }
 )
 public class DCreatureTrait {
 
     @Id
-    @Basic
-    @GeneratedValue
-    @JdbcTypeCode(SqlTypes.CHAR)
-    private UUID id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
 
     @ManyToOne(targetEntity = DCreature.class, optional = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     private DCreature creature;
 
-    @Column(nullable = false, name = "trait_id")
-    private String traitId;
+    @Column(nullable = false)
+    private String trait;
 
     //
 
-    private DCreatureTrait() {}
+    private DCreatureTrait() {
+    }
 
-    DCreatureTrait(DCreature creature, String traitId) {
+    DCreatureTrait(DCreature creature, String trait) {
         this.creature = creature;
-        this.traitId = traitId;
+        this.trait = trait;
     }
 
     //
@@ -44,8 +39,8 @@ public class DCreatureTrait {
         return creature;
     }
 
-    public String traitId() {
-        return traitId;
+    public String trait() {
+        return trait;
     }
 
 }

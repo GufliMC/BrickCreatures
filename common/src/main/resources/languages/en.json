@@ -5,40 +5,29 @@
   "cmd.error.args.trait": "<red>The trait {0} does not exist.",
   "cmd.error.args.creature": "<red>The creature {0} does not exist.",
 
+  "cmd.create": "<green>Created creature {0} of type {1}.",
+  "cmd.create.invalid": "<red>A creature with that name already exists.",
 
-  "cmd.creature.create": "<green>Created creature {0} of type {1}.",
-  "cmd.creature.create.invalid": "<red>A creature with that name already exists.",
+  "cmd.delete": "<green>Deleted {0}.",
 
-  "cmd.creature.delete": "<green>Deleted {0}.",
+  "cmd.list": "<green>List of creatures: {0}",
 
-  "cmd.creature.list": "<green>List of creatures: {0}",
+  "cmd.edit.skin.invalid": "<red>{0} is not an existing player.",
+  "cmd.edit.skin": "<green>Changed the skin of {0}.",
 
-  "cmd.creature.edit.skin.invalid": "<red>{0} is not an existing player.",
-  "cmd.creature.edit.skin": "<green>Changed the skin of {0}.",
+  "cmd.edit.lookhere": "Updated {0} to look in your direction.",
 
+  "cmd.edit.teleporthere": "Updated {0} to your position.",
 
-  "cmd.spawn.create": "<green>Created spawn {0} of creature {1} at your current position.",
-  "cmd.spawn.create.invalid": "<red>A spawn with that name already exists.",
+  "cmd.trait.list.usage": "Invalid usage, try this: /bn template trait list <template>",
+  "cmd.trait.list": "List of traits for {0}: {1}",
 
-  "cmd.spawn.delete": "Deleted {0}.",
+  "cmd.trait.add.usage": "Invalid usage, try this: /bn template trait add <template> <trait>",
+  "cmd.trait.add": "Added trait {1} to {0}.",
 
-  "cmd.spawn.list": "<green>List of spawns: {0}",
+  "cmd.trait.remove.usage": "Invalid usage, try this: /bn template trait remove <template> <trait>",
+  "cmd.trait.remove": "Removed trait {1} from {0}.",
 
-  "cmd.spawn.edit.lookhere": "Updated {0} to look in your direction.",
-
-  "cmd.spawn.edit.teleporthere": "Updated {0} to your position.",
-
-
-  "cmd.template.edit.customname.invalid": "Invalid usage, try this: /bn template edit customname <template> <name>",
-  "cmd.template.edit.customname": "Changed the custom name of {0} to {1}.",
-
-  "cmd.template.trait.list.usage": "Invalid usage, try this: /bn template trait list <template>",
-  "cmd.template.trait.list": "List of traits for {0}: {1}",
-
-  "cmd.template.trait.add.usage": "Invalid usage, try this: /bn template trait add <template> <trait>",
-  "cmd.template.trait.add": "Added trait {1} to {0}.",
-
-  "cmd.template.trait.remove.usage": "Invalid usage, try this: /bn template trait remove <template> <trait>",
-  "cmd.template.trait.remove": "Removed trait {1} from {0}."
+  "cmd.reload": "<green>Reloaded creatures..."
 
 }

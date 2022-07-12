@@ -4,14 +4,13 @@ import cloud.commandframework.annotations.AnnotationParser;
 import cloud.commandframework.execution.CommandExecutionCoordinator;
 import cloud.commandframework.meta.SimpleCommandMeta;
 import com.google.gson.Gson;
-import com.guflimc.brick.creatures.api.domain.PersistentCreature;
+import com.guflimc.brick.creatures.api.domain.Creature;
 import com.guflimc.brick.creatures.common.BrickCreaturesConfig;
-import com.guflimc.brick.creatures.common.BrickDatabaseContext;
-import com.guflimc.brick.creatures.common.metadata.MetadataSerializer;
+import com.guflimc.brick.creatures.common.BrickCreaturesDatabaseContext;
 import com.guflimc.brick.creatures.minestom.api.MinestomCreaturesAPI;
-import com.guflimc.brick.creatures.minestom.arguments.PersistentCreatureArgument;
+import com.guflimc.brick.creatures.minestom.api.domain.MinestomCreature;
+import com.guflimc.brick.creatures.minestom.arguments.CreatureArgument;
 import com.guflimc.brick.creatures.minestom.commands.MinestomCreaturesCommands;
-import com.guflimc.brick.creatures.minestom.metadata.MinestomMetadataSerializer;
 import com.guflimc.brick.i18n.minestom.api.MinestomI18nAPI;
 import com.guflimc.brick.i18n.minestom.api.namespace.MinestomNamespace;
 import com.guflimc.cloud.minestom.MinestomCommandManager;
@@ -29,7 +28,7 @@ public class MinestomBrickCreatures extends Extension {
 
     private static final Gson gson = new Gson();
 
-    private BrickDatabaseContext databaseContext;
+    private BrickCreaturesDatabaseContext databaseContext;
     private MinestomCommandManager<CommandSender> commandManager;
 
     @Override
@@ -49,8 +48,7 @@ public class MinestomBrickCreatures extends Extension {
         }
 
         // DATABASE
-        databaseContext = new BrickDatabaseContext(config.database);
-        MetadataSerializer.SERIALIZER = new MinestomMetadataSerializer();
+        databaseContext = new BrickCreaturesDatabaseContext(config.database);
 
         MinestomBrickCreatureManager manager = new MinestomBrickCreatureManager(databaseContext);
         MinestomCreaturesAPI.registerManager(manager);
@@ -67,8 +65,8 @@ public class MinestomBrickCreatures extends Extension {
                 Function.identity()
         );
 
-        commandManager.getParserRegistry().registerParserSupplier(TypeToken.get(PersistentCreature.class), parserParameters ->
-                new PersistentCreatureArgument.CreatureParser<>());
+        commandManager.parserRegistry().registerParserSupplier(TypeToken.get(MinestomCreature.class), parserParameters ->
+                new CreatureArgument.CreatureParser<>());
 
         AnnotationParser<CommandSender> annotationParser = new AnnotationParser<>(
                 commandManager,

@@ -7,5 +7,9 @@ dependencies {
 
     implementation 'net.kyori:adventure-text-serializer-gson:+'
     implementation 'com.google.code.gson:gson:+'
-    implementation 'org.hibernate:hibernate-core:+'
+
+    // database
+    api 'com.guflimc.brick.orm:common:+'
+
+    implementation 'com.guflimc.brick.maths:database-api:+'
 }
