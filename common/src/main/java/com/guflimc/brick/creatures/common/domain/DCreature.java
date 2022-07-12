@@ -1,15 +1,16 @@
 package com.guflimc.brick.creatures.common.domain;
 
 import com.guflimc.brick.creatures.api.domain.Creature;
-import com.guflimc.brick.creatures.common.converters.NBTConverter;
 import com.guflimc.brick.maths.api.geo.Location;
 import com.guflimc.brick.maths.api.geo.Position;
 import com.guflimc.brick.maths.database.api.LocationConverter;
 import jakarta.persistence.*;
+import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.JdbcTypeCode;
+import org.hibernate.annotations.UpdateTimestamp;
 import org.hibernate.type.SqlTypes;
-import org.jglrxavpok.hephaistos.nbt.NBTCompound;
 
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -34,19 +35,26 @@ public class DCreature implements Creature {
 
     @Convert(converter = LocationConverter.class)
     @Column(nullable = false)
-    public Location location = new Location(null, 0, 0, 0, 0, 0);
+    private Location location = new Location(null, 0, 0, 0, 0, 0);
 
-    @Convert(converter = NBTConverter.class)
-    private NBTCompound nbt;
+    @Column(length = 65565)
+    private String metadata;
 
     @OneToMany(targetEntity = DCreatureTrait.class, mappedBy = "creature",
             orphanRemoval = true, fetch = FetchType.EAGER,
             cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE})
     private final List<DCreatureTrait> traits = new ArrayList<>();
 
+    @CreationTimestamp
+    private Instant createdAt;
+
+    @UpdateTimestamp
+    private Instant updateAt;
+
     //
 
-    private DCreature() {}
+    private DCreature() {
+    }
 
     public DCreature(String type) {
         this.type = type;
@@ -74,17 +82,23 @@ public class DCreature implements Creature {
 
     @Override
     public void setPosition(Position position) {
-        this.location = location.withPosition(position);
+        setLocation(location.withPosition(position));
     }
 
-    @Override
-    public NBTCompound nbt() {
-        return nbt;
+    public void setLocation(Location location) {
+        this.location = location;
     }
 
-    @Override
-    public void setNBT(NBTCompound nbt) {
-        this.nbt = nbt;
+    public Location location() {
+        return location;
+    }
+
+    public void setMetadata(String metadata) {
+        this.metadata = metadata;
+    }
+
+    public String metadata() {
+        return metadata;
     }
 
     public String type() {

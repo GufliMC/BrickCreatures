@@ -15,19 +15,24 @@
   "cmd.edit.skin.invalid": "<red>{0} is not an existing player.",
   "cmd.edit.skin": "<green>Changed the skin of {0}.",
 
-  "cmd.edit.lookhere": "Updated {0} to look in your direction.",
+  "cmd.edit.lookhere": "<green>Updated <dark_green>{0} <green>to look in your direction.",
 
-  "cmd.edit.teleporthere": "Updated {0} to your position.",
+  "cmd.edit.teleporthere": "<green>Updated {0} to your position.",
 
-  "cmd.trait.list.usage": "Invalid usage, try this: /bn template trait list <template>",
-  "cmd.trait.list": "List of traits for {0}: {1}",
+  "cmd.trait.list.usage": "<red>Invalid usage, try this: /bn template trait list <template>",
+  "cmd.trait.list": "<green>List of traits for {0}: {1}",
 
-  "cmd.trait.add.usage": "Invalid usage, try this: /bn template trait add <template> <trait>",
-  "cmd.trait.add": "Added trait {1} to {0}.",
+  "cmd.trait.add.usage": "<red>Invalid usage, try this: /bn template trait add <template> <trait>",
+  "cmd.trait.add": "<green>Added trait {1} to {0}.",
 
-  "cmd.trait.remove.usage": "Invalid usage, try this: /bn template trait remove <template> <trait>",
-  "cmd.trait.remove": "Removed trait {1} from {0}.",
+  "cmd.trait.remove.usage": "<red>Invalid usage, try this: /bn template trait remove <template> <trait>",
+  "cmd.trait.remove": "<green>Removed trait {1} from {0}.",
 
-  "cmd.reload": "<green>Reloaded creatures..."
+  "cmd.reload": "<green>Reloaded creatures...",
 
+  "cmd.edit.metadata.key.invalid": "<red>The metadata key <dark_red>{0} <red>does not exist or cannot be set.",
+  "cmd.edit.metadata.key.unsupported": "<red>The metadata key <dark_red>{0} <red>is currently not supported.",
+  "cmd.edit.metadata.value.invalid": "<red>The metadata value <dark_red>{0} <red>is not valid for the given key.",
+  "cmd.edit.metadata.error": "<red>An error occured while trying to set metadata.",
+  "cmd.edit.metadata": "<green>Changed metadata {0} to {1} for creature {2}."
 }

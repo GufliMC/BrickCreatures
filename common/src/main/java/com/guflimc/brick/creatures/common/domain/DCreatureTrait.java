@@ -1,8 +1,11 @@
 package com.guflimc.brick.creatures.common.domain;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
+
+import java.time.Instant;
 
 @Entity
 @Table(name = "creature_traits",
@@ -22,6 +25,9 @@ public class DCreatureTrait {
 
     @Column(nullable = false)
     private String trait;
+
+    @CreationTimestamp
+    private Instant createdAt;
 
     //
 

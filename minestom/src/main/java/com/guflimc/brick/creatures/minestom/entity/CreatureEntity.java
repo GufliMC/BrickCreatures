@@ -14,6 +14,8 @@ public class CreatureEntity extends EntityCreature {
 
     public CreatureEntity(@NotNull EntityType entityType) {
         super(entityType);
+
+
     }
 
     @Override

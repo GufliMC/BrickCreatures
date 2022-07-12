@@ -2,18 +2,29 @@ package com.guflimc.brick.creatures.minestom.commands;
 
 import cloud.commandframework.annotations.Argument;
 import cloud.commandframework.annotations.CommandMethod;
+import cloud.commandframework.annotations.specifier.Greedy;
 import com.guflimc.brick.creatures.api.domain.Creature;
 import com.guflimc.brick.creatures.minestom.MinestomBrickCreatureManager;
 import com.guflimc.brick.creatures.minestom.api.domain.MinestomCreature;
 import com.guflimc.brick.i18n.api.I18nAPI;
 import com.guflimc.brick.maths.minestom.api.MinestomMaths;
 import net.kyori.adventure.audience.Audience;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.minimessage.MiniMessage;
 import net.minestom.server.coordinate.Pos;
 import net.minestom.server.coordinate.Vec;
 import net.minestom.server.entity.EntityType;
 import net.minestom.server.entity.Player;
+import net.minestom.server.entity.metadata.EntityMeta;
+import net.minestom.server.entity.metadata.animal.PigMeta;
 import net.minestom.server.utils.position.PositionUtils;
 
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 public class MinestomCreaturesCommands {
@@ -97,5 +108,53 @@ public class MinestomCreaturesCommands {
         manager.merge(creature);
 
         I18nAPI.get(this).send(sender, "cmd.edit.lookhere", creature.name());
+    }
+
+    @CommandMethod("bc edit metadata <creature> <key> <value>")
+    public void editMetadata(Player sender,
+                             @Argument(value = "creature") MinestomCreature creature,
+                             @Argument(value = "key", parserName = "metadata") Method method,
+                             @Argument(value = "value") @Greedy String value) {
+
+        EntityMeta em = creature.entity().getEntityMeta();
+        String key = method.getName().substring(3);
+
+        Class<?> type = method.getParameterTypes()[0];
+        if ( !parsers.containsKey(type) ) {
+            I18nAPI.get(this).send(sender, "cmd.edit.metadata.key.unsupported", key);
+            return;
+        }
+
+        Object val;
+        try {
+            val = parsers.get(type).apply(value);
+        } catch (Exception ex) {
+            I18nAPI.get(this).send(sender, "cmd.edit.metadata.value.invalid", value);
+            return;
+        }
+
+        try {
+            method.invoke(em, val);
+        } catch (IllegalAccessException | InvocationTargetException e) {
+            I18nAPI.get(this).send(sender, "cmd.edit.metadata.error");
+            return;
+        }
+
+        manager.merge(creature);
+        I18nAPI.get(this).send(sender, "cmd.edit.metadata", key, value, creature.name());
+    }
+
+    static Map<Class<?>, Function<String, ?>> parsers = new HashMap<>();
+    static {
+        parsers.put(boolean.class, Boolean::parseBoolean);
+        parsers.put(int.class, Integer::parseInt);
+        parsers.put(double.class, Double::parseDouble);
+        parsers.put(long.class, Long::parseLong);
+        parsers.put(float.class, Float::parseFloat);
+        parsers.put(byte.class, Byte::parseByte);
+        parsers.put(short.class, Short::parseShort);
+        parsers.put(char.class, s -> s.charAt(0));
+        parsers.put(String.class, Function.identity());
+        parsers.put(Component.class, s -> MiniMessage.miniMessage().deserialize(s));
     }
 }

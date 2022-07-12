@@ -4,12 +4,12 @@ import cloud.commandframework.annotations.AnnotationParser;
 import cloud.commandframework.execution.CommandExecutionCoordinator;
 import cloud.commandframework.meta.SimpleCommandMeta;
 import com.google.gson.Gson;
-import com.guflimc.brick.creatures.api.domain.Creature;
 import com.guflimc.brick.creatures.common.BrickCreaturesConfig;
 import com.guflimc.brick.creatures.common.BrickCreaturesDatabaseContext;
 import com.guflimc.brick.creatures.minestom.api.MinestomCreaturesAPI;
 import com.guflimc.brick.creatures.minestom.api.domain.MinestomCreature;
 import com.guflimc.brick.creatures.minestom.arguments.CreatureArgument;
+import com.guflimc.brick.creatures.minestom.arguments.MetadataMethodArgument;
 import com.guflimc.brick.creatures.minestom.commands.MinestomCreaturesCommands;
 import com.guflimc.brick.i18n.minestom.api.MinestomI18nAPI;
 import com.guflimc.brick.i18n.minestom.api.namespace.MinestomNamespace;
@@ -67,6 +67,9 @@ public class MinestomBrickCreatures extends Extension {
 
         commandManager.parserRegistry().registerParserSupplier(TypeToken.get(MinestomCreature.class), parserParameters ->
                 new CreatureArgument.CreatureParser<>());
+
+        commandManager.parserRegistry().registerNamedParserSupplier("metadata", parserParameters ->
+                new MetadataMethodArgument.MetadataMethodParser<>());
 
         AnnotationParser<CommandSender> annotationParser = new AnnotationParser<>(
                 commandManager,

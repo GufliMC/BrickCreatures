@@ -47,8 +47,8 @@ public class MinestomBrickCreatureManager implements MinestomCreatureManager {
     private void load(World world) {
         logger.info("Loading creatures for world '{}'.", world.info().name());
         creatures.stream().filter(c -> c.instance() == null)
-                .filter(c -> c.domainCreature().location != null && c.domainCreature().location.worldName() != null)
-                .filter(c -> c.domainCreature().location.worldName().equals(world.info().name()))
+                .filter(c -> c.domainCreature().location() != null && c.domainCreature().location().worldName() != null)
+                .filter(c -> c.domainCreature().location().worldName().equals(world.info().name()))
                 .forEach(h -> {
                     h.setInstance(((MinestomWorld) world).asInstance());
                 });
@@ -102,7 +102,9 @@ public class MinestomBrickCreatureManager implements MinestomCreatureManager {
 
     @Override
     public CompletableFuture<Void> persist(@NotNull Creature creature) {
-        return databaseContext.persistAsync(((MinestomBrickCreature) creature).domainCreature());
+        MinestomBrickCreature crea = (MinestomBrickCreature) creature;
+        crea.writeMetadata();
+        return databaseContext.persistAsync(crea.domainCreature());
     }
 
     @Override
@@ -117,6 +119,7 @@ public class MinestomBrickCreatureManager implements MinestomCreatureManager {
     @Override
     public CompletableFuture<Void> merge(@NotNull Creature creature) {
         MinestomBrickCreature crea = (MinestomBrickCreature) creature;
+        crea.writeMetadata();
         return databaseContext.mergeAsync(crea.domainCreature()).thenAccept(crea::setDomainCreature);
     }
 

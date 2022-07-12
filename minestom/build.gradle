@@ -19,6 +19,7 @@ dependencies {
     library 'org.apache.commons:commons-lang3:3.12.0'
     library 'org.hibernate:hibernate-core:+'
     library 'mysql:mysql-connector-java:5.+'
+    library 'net.kyori:adventure-text-minimessage:4.+'
 
     // shadow
     implementation (project(':common')) {
