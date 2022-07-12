@@ -35,7 +35,10 @@ public class MinestomBrickCreature implements MinestomCreature {
 
         EntityType type = EntityType.fromNamespaceId(domainCreature.type());
         if (type == EntityType.PLAYER) {
-            this.entity = new CreatureHuman();
+            CreatureHuman human = new CreatureHuman();
+            human.setSkin(domainCreature.humanSkinTextures(), domainCreature.humanSkinSignature());
+
+            this.entity = human;
         } else {
             this.entity = new CreatureEntity(type);
         }
@@ -74,7 +77,7 @@ public class MinestomBrickCreature implements MinestomCreature {
 
     @Override
     public void despawn() {
-        entity._remove();
+        entity.despawn();
     }
 
     @Override
@@ -86,7 +89,7 @@ public class MinestomBrickCreature implements MinestomCreature {
      * domain -> entity
      */
     public void readMetadata() {
-        if ( domainCreature.metadata() == null ) {
+        if (domainCreature.metadata() == null) {
             return;
         }
 
@@ -102,7 +105,7 @@ public class MinestomBrickCreature implements MinestomCreature {
 
             Metadata metadata = (Metadata) field.get(entity.getEntityMeta());
             Map<Integer, Metadata.Entry<?>> entries = packet.entries();
-            for ( int index : entries.keySet() ) {
+            for (int index : entries.keySet()) {
                 metadata.getEntries().put(index, entries.get(index));
             }
         } catch (IllegalAccessException | NoSuchFieldException e) {
@@ -144,6 +147,18 @@ public class MinestomBrickCreature implements MinestomCreature {
         if (entity.getInstance() != null) {
             entity.teleport(MinestomMaths.toPos(position));
         }
+    }
+
+    @Override
+    public void setHumanSkin(String textures, String signature) {
+        this.domainCreature.setHumanSkin(textures, signature);
+
+        if (entity.getEntityType() == EntityType.PLAYER) {
+            return;
+        }
+
+        CreatureHuman human = (CreatureHuman) entity;
+        human.setSkin(textures, signature);
     }
 
     @Override

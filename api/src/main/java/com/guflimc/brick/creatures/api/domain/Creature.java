@@ -15,6 +15,8 @@ public interface Creature {
 
     void setPosition(Position position);
 
+    void setHumanSkin(String textures, String signature);
+
     List<String> traits();
 
     void addTrait(String trait);

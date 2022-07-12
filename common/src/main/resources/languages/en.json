@@ -12,9 +12,6 @@
 
   "cmd.list": "<green>List of creatures: {0}",
 
-  "cmd.edit.skin.invalid": "<red>{0} is not an existing player.",
-  "cmd.edit.skin": "<green>Changed the skin of {0}.",
-
   "cmd.edit.lookhere": "<green>Updated <dark_green>{0} <green>to look in your direction.",
 
   "cmd.edit.teleporthere": "<green>Updated {0} to your position.",
@@ -34,5 +31,9 @@
   "cmd.edit.metadata.key.unsupported": "<red>The metadata key <dark_red>{0} <red>is currently not supported.",
   "cmd.edit.metadata.value.invalid": "<red>The metadata value <dark_red>{0} <red>is not valid for the given key.",
   "cmd.edit.metadata.error": "<red>An error occured while trying to set metadata.",
-  "cmd.edit.metadata": "<green>Changed metadata {0} to {1} for creature {2}."
+  "cmd.edit.metadata": "<green>Changed metadata {0} to {1} for creature {2}.",
+
+  "cmd.edit.skin.unsupported": "<red>Only human creatures can have a skin.",
+  "cmd.edit.skin.invalid": "<dark_red>{0} <red>is not an existing player.",
+  "cmd.edit.skin": "<green>Changed skin of {0}."
 }

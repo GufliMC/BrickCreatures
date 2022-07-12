@@ -40,6 +40,12 @@ public class DCreature implements Creature {
     @Column(length = 65565)
     private String metadata;
 
+    @Column(length = 2048)
+    private String humanSkinTextures;
+
+    @Column(length = 2048)
+    private String humanSkinSignature;
+
     @OneToMany(targetEntity = DCreatureTrait.class, mappedBy = "creature",
             orphanRemoval = true, fetch = FetchType.EAGER,
             cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE})
@@ -105,6 +111,21 @@ public class DCreature implements Creature {
         return type;
     }
 
+    public String humanSkinTextures() {
+        return humanSkinTextures;
+    }
+
+    public String humanSkinSignature() {
+        return humanSkinSignature;
+    }
+
+    @Override
+    public void setHumanSkin(String textures, String signature) {
+        this.humanSkinTextures = textures;
+        this.humanSkinSignature = signature;
+    }
+
+    @Override
     public List<String> traits() {
         return traits.stream().map(DCreatureTrait::trait).toList();
     }

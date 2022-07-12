@@ -23,7 +23,7 @@ public class CreatureEntity extends EntityCreature {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
-    public void _remove() {
+    public void despawn() {
         super.remove();
     }
 }

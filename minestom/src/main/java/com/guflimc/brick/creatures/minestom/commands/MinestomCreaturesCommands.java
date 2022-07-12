@@ -15,13 +15,13 @@ import net.minestom.server.coordinate.Pos;
 import net.minestom.server.coordinate.Vec;
 import net.minestom.server.entity.EntityType;
 import net.minestom.server.entity.Player;
+import net.minestom.server.entity.PlayerSkin;
 import net.minestom.server.entity.metadata.EntityMeta;
-import net.minestom.server.entity.metadata.animal.PigMeta;
+import net.minestom.server.entity.metadata.PlayerMeta;
 import net.minestom.server.utils.position.PositionUtils;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
@@ -79,7 +79,7 @@ public class MinestomCreaturesCommands {
                 manager.creatures().stream().map(Creature::name).collect(Collectors.toList()));
     }
 
-    @CommandMethod("bc edit tphere <creature>")
+    @CommandMethod("bc tphere <creature>")
     public void creatureTeleporthere(Player sender,
                                      @Argument(value = "creature") MinestomCreature creature
     ) {
@@ -90,7 +90,7 @@ public class MinestomCreaturesCommands {
         I18nAPI.get(this).send(sender, "cmd.edit.teleporthere", creature.name());
     }
 
-    @CommandMethod("bc edit lookhere <creature>")
+    @CommandMethod("bc lookhere <creature>")
     public void creatureLookhere(Player sender,
                                  @Argument(value = "creature") MinestomCreature creature) {
 
@@ -110,7 +110,40 @@ public class MinestomCreaturesCommands {
         I18nAPI.get(this).send(sender, "cmd.edit.lookhere", creature.name());
     }
 
-    @CommandMethod("bc edit metadata <creature> <key> <value>")
+    @CommandMethod("bc setskin <creature> <username>")
+    public void creatureEditSkin(Player sender,
+                                 @Argument(value = "creature") MinestomCreature creature,
+                                 @Argument(value = "username") String username) {
+
+        if ( creature.entity().getEntityType() != EntityType.PLAYER ) {
+            I18nAPI.get(this).send(sender, "cmd.edit.skin.unsupported");
+            return;
+        }
+
+        PlayerSkin skin = PlayerSkin.fromUsername(username);
+        if ( skin == null ) {
+            I18nAPI.get(this).send(sender, "cmd.edit.skin.invalid", username);
+            return;
+        }
+
+        creature.setHumanSkin(skin.textures(), skin.signature());
+
+        // default skin meta
+        PlayerMeta meta = (PlayerMeta) creature.entity().getEntityMeta();
+        meta.setCapeEnabled(true);
+        meta.setLeftSleeveEnabled(true);
+        meta.setRightSleeveEnabled(true);
+        meta.setLeftLegEnabled(true);
+        meta.setRightLegEnabled(true);
+        meta.setHatEnabled(true);
+        meta.setJacketEnabled(true);
+
+        manager.merge(creature);
+
+        I18nAPI.get(this).send(sender, "cmd.edit.skin", creature.name());
+    }
+
+    @CommandMethod("bc setmeta <creature> <key> <value>")
     public void editMetadata(Player sender,
                              @Argument(value = "creature") MinestomCreature creature,
                              @Argument(value = "key", parserName = "metadata") Method method,
@@ -120,7 +153,7 @@ public class MinestomCreaturesCommands {
         String key = method.getName().substring(3);
 
         Class<?> type = method.getParameterTypes()[0];
-        if ( !parsers.containsKey(type) ) {
+        if (!parsers.containsKey(type)) {
             I18nAPI.get(this).send(sender, "cmd.edit.metadata.key.unsupported", key);
             return;
         }
@@ -145,6 +178,7 @@ public class MinestomCreaturesCommands {
     }
 
     static Map<Class<?>, Function<String, ?>> parsers = new HashMap<>();
+
     static {
         parsers.put(boolean.class, Boolean::parseBoolean);
         parsers.put(int.class, Integer::parseInt);
