@@ -68,11 +68,11 @@ loadScripts(document, 'script');</script>
 <!-- ======== START OF CLASS DATA ======== -->
 <div class="header">
 <div class="sub-title"><span class="package-label-in-type">Package</span>&nbsp;<a href="package-summary.html">com.guflimc.brick.creatures.api</a></div>
-<h1 title="Interface CreatureManager" class="title">Interface CreatureManager&lt;WORLD,<wbr>ENTITY,<wbr>ENTITYTYPE&gt;</h1>
+<h1 title="Interface CreatureManager" class="title">Interface CreatureManager&lt;C extends <a href="domain/Creature.html" title="interface in com.guflimc.brick.creatures.api.domain">Creature</a>,<wbr>T&gt;</h1>
 </div>
 <section class="class-description" id="class-description">
 <hr>
-<div class="type-signature"><span class="modifiers">public interface </span><span class="element-name type-name-label">CreatureManager&lt;WORLD,<wbr>ENTITY,<wbr>ENTITYTYPE&gt;</span></div>
+<div class="type-signature"><span class="modifiers">public interface </span><span class="element-name type-name-label">CreatureManager&lt;C extends <a href="domain/Creature.html" title="interface in com.guflimc.brick.creatures.api.domain">Creature</a>,<wbr>T&gt;</span></div>
 </section>
 <section class="summary">
 <ul class="summary-list">
@@ -87,60 +87,43 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-first">Modifier and Type</div>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Optional.html" title="class or interface in java.util" class="external-link">Optional</a>&lt;<a href="domain/PersistentCreature.html" title="interface in com.guflimc.brick.creatures.api.domain">PersistentCreature</a>&gt;</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#creature(java.lang.String)" class="member-name-link">creature</a><wbr>(@NotNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;id)</code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="CreatureManager.html" title="type parameter in CreatureManager">C</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#create(java.lang.String,T)" class="member-name-link">create</a><wbr>(@NotNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name,
+ <a href="CreatureManager.html" title="type parameter in CreatureManager">T</a>&nbsp;type)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collection.html" title="class or interface in java.util" class="external-link">Collection</a>&lt;<a href="domain/PersistentCreature.html" title="interface in com.guflimc.brick.creatures.api.domain">PersistentCreature</a>&gt;</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#creatures()" class="member-name-link">creatures</a>()</code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="CreatureManager.html" title="type parameter in CreatureManager">C</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#create(T)" class="member-name-link">create</a><wbr>(<a href="CreatureManager.html" title="type parameter in CreatureManager">T</a>&nbsp;type)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/concurrent/CompletableFuture.html" title="class or interface in java.util.concurrent" class="external-link">CompletableFuture</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Void.html" title="class or interface in java.lang" class="external-link">Void</a>&gt;</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#merge(com.guflimc.brick.creatures.api.domain.PersistentCreature)" class="member-name-link">merge</a><wbr>(@NotNull <a href="domain/PersistentCreature.html" title="interface in com.guflimc.brick.creatures.api.domain">PersistentCreature</a>&nbsp;creature)</code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collection.html" title="class or interface in java.util" class="external-link">Collection</a>&lt;<a href="domain/Creature.html" title="interface in com.guflimc.brick.creatures.api.domain">Creature</a>&gt;</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#creatures()" class="member-name-link">creatures</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Optional.html" title="class or interface in java.util" class="external-link">Optional</a>&lt;<a href="domain/Creature.html" title="interface in com.guflimc.brick.creatures.api.domain">Creature</a>&gt;</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#find(java.lang.String)" class="member-name-link">find</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Optional.html" title="class or interface in java.util" class="external-link">Optional</a>&lt;<a href="domain/TraitKey.html" title="class in com.guflimc.brick.creatures.api.domain">TraitKey</a>&lt;<a href="CreatureManager.html" title="type parameter in CreatureManager">C</a>&gt;&gt;</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#findTrait(java.lang.String)" class="member-name-link">findTrait</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/concurrent/CompletableFuture.html" title="class or interface in java.util.concurrent" class="external-link">CompletableFuture</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Void.html" title="class or interface in java.lang" class="external-link">Void</a>&gt;</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#merge(com.guflimc.brick.creatures.api.domain.PersistentSpawn)" class="member-name-link">merge</a><wbr>(@NotNull <a href="domain/PersistentSpawn.html" title="interface in com.guflimc.brick.creatures.api.domain">PersistentSpawn</a>&nbsp;spawn)</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#merge(com.guflimc.brick.creatures.api.domain.Creature)" class="member-name-link">merge</a><wbr>(@NotNull <a href="domain/Creature.html" title="interface in com.guflimc.brick.creatures.api.domain">Creature</a>&nbsp;creature)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/concurrent/CompletableFuture.html" title="class or interface in java.util.concurrent" class="external-link">CompletableFuture</a>&lt;<a href="domain/PersistentCreature.html" title="interface in com.guflimc.brick.creatures.api.domain">PersistentCreature</a>&gt;</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#persist(java.lang.String,com.guflimc.brick.creatures.api.domain.Creature)" class="member-name-link">persist</a><wbr>(@NotNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;id,
- @NotNull <a href="domain/Creature.html" title="interface in com.guflimc.brick.creatures.api.domain">Creature</a>&lt;<a href="CreatureManager.html" title="type parameter in CreatureManager">ENTITY</a>&gt;&nbsp;creature)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/concurrent/CompletableFuture.html" title="class or interface in java.util.concurrent" class="external-link">CompletableFuture</a>&lt;<a href="domain/PersistentSpawn.html" title="interface in com.guflimc.brick.creatures.api.domain">PersistentSpawn</a>&gt;</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#persist(java.lang.String,com.guflimc.brick.creatures.api.domain.PersistentCreature,com.guflimc.brick.creatures.api.meta.Position,WORLD)" class="member-name-link">persist</a><wbr>(@NotNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;id,
- @NotNull <a href="domain/PersistentCreature.html" title="interface in com.guflimc.brick.creatures.api.domain">PersistentCreature</a>&nbsp;creature,
- @NotNull <a href="meta/Position.html" title="class in com.guflimc.brick.creatures.api.meta">Position</a>&nbsp;position,
- <a href="CreatureManager.html" title="type parameter in CreatureManager">WORLD</a>&nbsp;world)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/concurrent/CompletableFuture.html" title="class or interface in java.util.concurrent" class="external-link">CompletableFuture</a>&lt;<a href="domain/PersistentCreature.html" title="interface in com.guflimc.brick.creatures.api.domain">PersistentCreature</a>&gt;</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#persist(java.lang.String,ENTITYTYPE)" class="member-name-link">persist</a><wbr>(@NotNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;id,
- <a href="CreatureManager.html" title="type parameter in CreatureManager">ENTITYTYPE</a>&nbsp;type)</code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/concurrent/CompletableFuture.html" title="class or interface in java.util.concurrent" class="external-link">CompletableFuture</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Void.html" title="class or interface in java.lang" class="external-link">Void</a>&gt;</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#persist(com.guflimc.brick.creatures.api.domain.Creature)" class="member-name-link">persist</a><wbr>(@NotNull <a href="domain/Creature.html" title="interface in com.guflimc.brick.creatures.api.domain">Creature</a>&nbsp;creature)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#refresh(com.guflimc.brick.creatures.api.domain.PersistentCreature)" class="member-name-link">refresh</a><wbr>(@NotNull <a href="domain/PersistentCreature.html" title="interface in com.guflimc.brick.creatures.api.domain">PersistentCreature</a>&nbsp;creature)</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#registerTrait(com.guflimc.brick.creatures.api.domain.TraitKey)" class="member-name-link">registerTrait</a><wbr>(<a href="domain/TraitKey.html" title="class in com.guflimc.brick.creatures.api.domain">TraitKey</a>&lt;<a href="CreatureManager.html" title="type parameter in CreatureManager">C</a>&gt;&nbsp;key)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#refresh(com.guflimc.brick.creatures.api.domain.PersistentSpawn)" class="member-name-link">refresh</a><wbr>(@NotNull <a href="domain/PersistentSpawn.html" title="interface in com.guflimc.brick.creatures.api.domain">PersistentSpawn</a>&nbsp;spawn)</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#reload()" class="member-name-link">reload</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/concurrent/CompletableFuture.html" title="class or interface in java.util.concurrent" class="external-link">CompletableFuture</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Void.html" title="class or interface in java.lang" class="external-link">Void</a>&gt;</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#remove(com.guflimc.brick.creatures.api.domain.PersistentCreature)" class="member-name-link">remove</a><wbr>(@NotNull <a href="domain/PersistentCreature.html" title="interface in com.guflimc.brick.creatures.api.domain">PersistentCreature</a>&nbsp;creature)</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#remove(com.guflimc.brick.creatures.api.domain.Creature)" class="member-name-link">remove</a><wbr>(@NotNull <a href="domain/Creature.html" title="interface in com.guflimc.brick.creatures.api.domain">Creature</a>&nbsp;creature)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/concurrent/CompletableFuture.html" title="class or interface in java.util.concurrent" class="external-link">CompletableFuture</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Void.html" title="class or interface in java.lang" class="external-link">Void</a>&gt;</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#remove(com.guflimc.brick.creatures.api.domain.PersistentSpawn)" class="member-name-link">remove</a><wbr>(@NotNull <a href="domain/PersistentSpawn.html" title="interface in com.guflimc.brick.creatures.api.domain">PersistentSpawn</a>&nbsp;spawn)</code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collection.html" title="class or interface in java.util" class="external-link">Collection</a>&lt;<a href="domain/TraitKey.html" title="class in com.guflimc.brick.creatures.api.domain">TraitKey</a>&lt;<a href="CreatureManager.html" title="type parameter in CreatureManager">C</a>&gt;&gt;</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#traits()" class="member-name-link">traits</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="domain/Creature.html" title="interface in com.guflimc.brick.creatures.api.domain">Creature</a>&lt;<a href="CreatureManager.html" title="type parameter in CreatureManager">ENTITY</a>&gt;</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#spawn(com.guflimc.brick.creatures.api.meta.Position,WORLD,com.guflimc.brick.creatures.api.domain.PersistentCreature)" class="member-name-link">spawn</a><wbr>(@NotNull <a href="meta/Position.html" title="class in com.guflimc.brick.creatures.api.meta">Position</a>&nbsp;position,
- <a href="CreatureManager.html" title="type parameter in CreatureManager">WORLD</a>&nbsp;world,
- @NotNull <a href="domain/PersistentCreature.html" title="interface in com.guflimc.brick.creatures.api.domain">PersistentCreature</a>&nbsp;creature)</code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#unregisterTrait(com.guflimc.brick.creatures.api.domain.TraitKey)" class="member-name-link">unregisterTrait</a><wbr>(<a href="domain/TraitKey.html" title="class in com.guflimc.brick.creatures.api.domain">TraitKey</a>&lt;<a href="CreatureManager.html" title="type parameter in CreatureManager">C</a>&gt;&nbsp;key)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="domain/Creature.html" title="interface in com.guflimc.brick.creatures.api.domain">Creature</a>&lt;<a href="CreatureManager.html" title="type parameter in CreatureManager">ENTITY</a>&gt;</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#spawn(com.guflimc.brick.creatures.api.meta.Position,WORLD,ENTITYTYPE)" class="member-name-link">spawn</a><wbr>(@NotNull <a href="meta/Position.html" title="class in com.guflimc.brick.creatures.api.meta">Position</a>&nbsp;position,
- <a href="CreatureManager.html" title="type parameter in CreatureManager">WORLD</a>&nbsp;world,
- <a href="CreatureManager.html" title="type parameter in CreatureManager">ENTITYTYPE</a>&nbsp;type)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Optional.html" title="class or interface in java.util" class="external-link">Optional</a>&lt;<a href="domain/PersistentSpawn.html" title="interface in com.guflimc.brick.creatures.api.domain">PersistentSpawn</a>&gt;</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#spawn(java.lang.String)" class="member-name-link">spawn</a><wbr>(@NotNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;id)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collection.html" title="class or interface in java.util" class="external-link">Collection</a>&lt;<a href="domain/PersistentSpawn.html" title="interface in com.guflimc.brick.creatures.api.domain">PersistentSpawn</a>&gt;</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#spawns()" class="member-name-link">spawns</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
 </div>
 </div>
 </div>
@@ -156,124 +139,82 @@ loadScripts(document, 'script');</script>
 <h2>Method Details</h2>
 <ul class="member-list">
 <li>
-<section class="detail" id="spawn(com.guflimc.brick.creatures.api.meta.Position,WORLD,ENTITYTYPE)">
-<h3 id="spawn(com.guflimc.brick.creatures.api.meta.Position,java.lang.Object,java.lang.Object)">spawn</h3>
-<div class="member-signature"><span class="return-type"><a href="domain/Creature.html" title="interface in com.guflimc.brick.creatures.api.domain">Creature</a>&lt;<a href="CreatureManager.html" title="type parameter in CreatureManager">ENTITY</a>&gt;</span>&nbsp;<span class="element-name">spawn</span><wbr><span class="parameters">(@NotNull
- @NotNull <a href="meta/Position.html" title="class in com.guflimc.brick.creatures.api.meta">Position</a>&nbsp;position,
- @NotNull
- <a href="CreatureManager.html" title="type parameter in CreatureManager">WORLD</a>&nbsp;world,
- @NotNull
- <a href="CreatureManager.html" title="type parameter in CreatureManager">ENTITYTYPE</a>&nbsp;type)</span></div>
-</section>
-</li>
-<li>
-<section class="detail" id="spawn(com.guflimc.brick.creatures.api.meta.Position,WORLD,com.guflimc.brick.creatures.api.domain.PersistentCreature)">
-<h3 id="spawn(com.guflimc.brick.creatures.api.meta.Position,java.lang.Object,com.guflimc.brick.creatures.api.domain.PersistentCreature)">spawn</h3>
-<div class="member-signature"><span class="return-type"><a href="domain/Creature.html" title="interface in com.guflimc.brick.creatures.api.domain">Creature</a>&lt;<a href="CreatureManager.html" title="type parameter in CreatureManager">ENTITY</a>&gt;</span>&nbsp;<span class="element-name">spawn</span><wbr><span class="parameters">(@NotNull
- @NotNull <a href="meta/Position.html" title="class in com.guflimc.brick.creatures.api.meta">Position</a>&nbsp;position,
- @NotNull
- <a href="CreatureManager.html" title="type parameter in CreatureManager">WORLD</a>&nbsp;world,
- @NotNull
- @NotNull <a href="domain/PersistentCreature.html" title="interface in com.guflimc.brick.creatures.api.domain">PersistentCreature</a>&nbsp;creature)</span></div>
+<section class="detail" id="reload()">
+<h3>reload</h3>
+<div class="member-signature"><span class="return-type">void</span>&nbsp;<span class="element-name">reload</span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="creatures()">
 <h3>creatures</h3>
-<div class="member-signature"><span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collection.html" title="class or interface in java.util" class="external-link">Collection</a>&lt;<a href="domain/PersistentCreature.html" title="interface in com.guflimc.brick.creatures.api.domain">PersistentCreature</a>&gt;</span>&nbsp;<span class="element-name">creatures</span>()</div>
+<div class="member-signature"><span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collection.html" title="class or interface in java.util" class="external-link">Collection</a>&lt;<a href="domain/Creature.html" title="interface in com.guflimc.brick.creatures.api.domain">Creature</a>&gt;</span>&nbsp;<span class="element-name">creatures</span>()</div>
 </section>
 </li>
 <li>
-<section class="detail" id="creature(java.lang.String)">
-<h3>creature</h3>
-<div class="member-signature"><span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Optional.html" title="class or interface in java.util" class="external-link">Optional</a>&lt;<a href="domain/PersistentCreature.html" title="interface in com.guflimc.brick.creatures.api.domain">PersistentCreature</a>&gt;</span>&nbsp;<span class="element-name">creature</span><wbr><span class="parameters">(@NotNull
- @NotNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;id)</span></div>
+<section class="detail" id="find(java.lang.String)">
+<h3>find</h3>
+<div class="member-signature"><span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Optional.html" title="class or interface in java.util" class="external-link">Optional</a>&lt;<a href="domain/Creature.html" title="interface in com.guflimc.brick.creatures.api.domain">Creature</a>&gt;</span>&nbsp;<span class="element-name">find</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name)</span></div>
 </section>
 </li>
 <li>
-<section class="detail" id="persist(java.lang.String,com.guflimc.brick.creatures.api.domain.Creature)">
+<section class="detail" id="create(T)">
+<h3 id="create(java.lang.Object)">create</h3>
+<div class="member-signature"><span class="return-type"><a href="CreatureManager.html" title="type parameter in CreatureManager">C</a></span>&nbsp;<span class="element-name">create</span><wbr><span class="parameters">(@NotNull
+ <a href="CreatureManager.html" title="type parameter in CreatureManager">T</a>&nbsp;type)</span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="create(java.lang.String,T)">
+<h3 id="create(java.lang.String,java.lang.Object)">create</h3>
+<div class="member-signature"><span class="return-type"><a href="CreatureManager.html" title="type parameter in CreatureManager">C</a></span>&nbsp;<span class="element-name">create</span><wbr><span class="parameters">(@NotNull
+ @NotNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name,
+ @NotNull
+ <a href="CreatureManager.html" title="type parameter in CreatureManager">T</a>&nbsp;type)</span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="persist(com.guflimc.brick.creatures.api.domain.Creature)">
 <h3>persist</h3>
-<div class="member-signature"><span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/concurrent/CompletableFuture.html" title="class or interface in java.util.concurrent" class="external-link">CompletableFuture</a>&lt;<a href="domain/PersistentCreature.html" title="interface in com.guflimc.brick.creatures.api.domain">PersistentCreature</a>&gt;</span>&nbsp;<span class="element-name">persist</span><wbr><span class="parameters">(@NotNull
- @NotNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;id,
- @NotNull
- @NotNull <a href="domain/Creature.html" title="interface in com.guflimc.brick.creatures.api.domain">Creature</a>&lt;<a href="CreatureManager.html" title="type parameter in CreatureManager">ENTITY</a>&gt;&nbsp;creature)</span></div>
+<div class="member-signature"><span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/concurrent/CompletableFuture.html" title="class or interface in java.util.concurrent" class="external-link">CompletableFuture</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Void.html" title="class or interface in java.lang" class="external-link">Void</a>&gt;</span>&nbsp;<span class="element-name">persist</span><wbr><span class="parameters">(@NotNull
+ @NotNull <a href="domain/Creature.html" title="interface in com.guflimc.brick.creatures.api.domain">Creature</a>&nbsp;creature)</span></div>
 </section>
 </li>
 <li>
-<section class="detail" id="persist(java.lang.String,ENTITYTYPE)">
-<h3 id="persist(java.lang.String,java.lang.Object)">persist</h3>
-<div class="member-signature"><span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/concurrent/CompletableFuture.html" title="class or interface in java.util.concurrent" class="external-link">CompletableFuture</a>&lt;<a href="domain/PersistentCreature.html" title="interface in com.guflimc.brick.creatures.api.domain">PersistentCreature</a>&gt;</span>&nbsp;<span class="element-name">persist</span><wbr><span class="parameters">(@NotNull
- @NotNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;id,
- @NotNull
- <a href="CreatureManager.html" title="type parameter in CreatureManager">ENTITYTYPE</a>&nbsp;type)</span></div>
-</section>
-</li>
-<li>
-<section class="detail" id="merge(com.guflimc.brick.creatures.api.domain.PersistentCreature)">
-<h3>merge</h3>
-<div class="member-signature"><span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/concurrent/CompletableFuture.html" title="class or interface in java.util.concurrent" class="external-link">CompletableFuture</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Void.html" title="class or interface in java.lang" class="external-link">Void</a>&gt;</span>&nbsp;<span class="element-name">merge</span><wbr><span class="parameters">(@NotNull
- @NotNull <a href="domain/PersistentCreature.html" title="interface in com.guflimc.brick.creatures.api.domain">PersistentCreature</a>&nbsp;creature)</span></div>
-</section>
-</li>
-<li>
-<section class="detail" id="remove(com.guflimc.brick.creatures.api.domain.PersistentCreature)">
+<section class="detail" id="remove(com.guflimc.brick.creatures.api.domain.Creature)">
 <h3>remove</h3>
 <div class="member-signature"><span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/concurrent/CompletableFuture.html" title="class or interface in java.util.concurrent" class="external-link">CompletableFuture</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Void.html" title="class or interface in java.lang" class="external-link">Void</a>&gt;</span>&nbsp;<span class="element-name">remove</span><wbr><span class="parameters">(@NotNull
- @NotNull <a href="domain/PersistentCreature.html" title="interface in com.guflimc.brick.creatures.api.domain">PersistentCreature</a>&nbsp;creature)</span></div>
+ @NotNull <a href="domain/Creature.html" title="interface in com.guflimc.brick.creatures.api.domain">Creature</a>&nbsp;creature)</span></div>
 </section>
 </li>
 <li>
-<section class="detail" id="refresh(com.guflimc.brick.creatures.api.domain.PersistentCreature)">
-<h3>refresh</h3>
-<div class="member-signature"><span class="return-type">void</span>&nbsp;<span class="element-name">refresh</span><wbr><span class="parameters">(@NotNull
- @NotNull <a href="domain/PersistentCreature.html" title="interface in com.guflimc.brick.creatures.api.domain">PersistentCreature</a>&nbsp;creature)</span></div>
-</section>
-</li>
-<li>
-<section class="detail" id="spawns()">
-<h3>spawns</h3>
-<div class="member-signature"><span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collection.html" title="class or interface in java.util" class="external-link">Collection</a>&lt;<a href="domain/PersistentSpawn.html" title="interface in com.guflimc.brick.creatures.api.domain">PersistentSpawn</a>&gt;</span>&nbsp;<span class="element-name">spawns</span>()</div>
-</section>
-</li>
-<li>
-<section class="detail" id="spawn(java.lang.String)">
-<h3>spawn</h3>
-<div class="member-signature"><span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Optional.html" title="class or interface in java.util" class="external-link">Optional</a>&lt;<a href="domain/PersistentSpawn.html" title="interface in com.guflimc.brick.creatures.api.domain">PersistentSpawn</a>&gt;</span>&nbsp;<span class="element-name">spawn</span><wbr><span class="parameters">(@NotNull
- @NotNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;id)</span></div>
-</section>
-</li>
-<li>
-<section class="detail" id="persist(java.lang.String,com.guflimc.brick.creatures.api.domain.PersistentCreature,com.guflimc.brick.creatures.api.meta.Position,WORLD)">
-<h3 id="persist(java.lang.String,com.guflimc.brick.creatures.api.domain.PersistentCreature,com.guflimc.brick.creatures.api.meta.Position,java.lang.Object)">persist</h3>
-<div class="member-signature"><span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/concurrent/CompletableFuture.html" title="class or interface in java.util.concurrent" class="external-link">CompletableFuture</a>&lt;<a href="domain/PersistentSpawn.html" title="interface in com.guflimc.brick.creatures.api.domain">PersistentSpawn</a>&gt;</span>&nbsp;<span class="element-name">persist</span><wbr><span class="parameters">(@NotNull
- @NotNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;id,
- @NotNull
- @NotNull <a href="domain/PersistentCreature.html" title="interface in com.guflimc.brick.creatures.api.domain">PersistentCreature</a>&nbsp;creature,
- @NotNull
- @NotNull <a href="meta/Position.html" title="class in com.guflimc.brick.creatures.api.meta">Position</a>&nbsp;position,
- @NotNull
- <a href="CreatureManager.html" title="type parameter in CreatureManager">WORLD</a>&nbsp;world)</span></div>
-</section>
-</li>
-<li>
-<section class="detail" id="remove(com.guflimc.brick.creatures.api.domain.PersistentSpawn)">
-<h3>remove</h3>
-<div class="member-signature"><span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/concurrent/CompletableFuture.html" title="class or interface in java.util.concurrent" class="external-link">CompletableFuture</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Void.html" title="class or interface in java.lang" class="external-link">Void</a>&gt;</span>&nbsp;<span class="element-name">remove</span><wbr><span class="parameters">(@NotNull
- @NotNull <a href="domain/PersistentSpawn.html" title="interface in com.guflimc.brick.creatures.api.domain">PersistentSpawn</a>&nbsp;spawn)</span></div>
-</section>
-</li>
-<li>
-<section class="detail" id="merge(com.guflimc.brick.creatures.api.domain.PersistentSpawn)">
+<section class="detail" id="merge(com.guflimc.brick.creatures.api.domain.Creature)">
 <h3>merge</h3>
 <div class="member-signature"><span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/concurrent/CompletableFuture.html" title="class or interface in java.util.concurrent" class="external-link">CompletableFuture</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Void.html" title="class or interface in java.lang" class="external-link">Void</a>&gt;</span>&nbsp;<span class="element-name">merge</span><wbr><span class="parameters">(@NotNull
- @NotNull <a href="domain/PersistentSpawn.html" title="interface in com.guflimc.brick.creatures.api.domain">PersistentSpawn</a>&nbsp;spawn)</span></div>
+ @NotNull <a href="domain/Creature.html" title="interface in com.guflimc.brick.creatures.api.domain">Creature</a>&nbsp;creature)</span></div>
 </section>
 </li>
 <li>
-<section class="detail" id="refresh(com.guflimc.brick.creatures.api.domain.PersistentSpawn)">
-<h3>refresh</h3>
-<div class="member-signature"><span class="return-type">void</span>&nbsp;<span class="element-name">refresh</span><wbr><span class="parameters">(@NotNull
- @NotNull <a href="domain/PersistentSpawn.html" title="interface in com.guflimc.brick.creatures.api.domain">PersistentSpawn</a>&nbsp;spawn)</span></div>
+<section class="detail" id="registerTrait(com.guflimc.brick.creatures.api.domain.TraitKey)">
+<h3>registerTrait</h3>
+<div class="member-signature"><span class="return-type">void</span>&nbsp;<span class="element-name">registerTrait</span><wbr><span class="parameters">(<a href="domain/TraitKey.html" title="class in com.guflimc.brick.creatures.api.domain">TraitKey</a>&lt;<a href="CreatureManager.html" title="type parameter in CreatureManager">C</a>&gt;&nbsp;key)</span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="unregisterTrait(com.guflimc.brick.creatures.api.domain.TraitKey)">
+<h3>unregisterTrait</h3>
+<div class="member-signature"><span class="return-type">void</span>&nbsp;<span class="element-name">unregisterTrait</span><wbr><span class="parameters">(<a href="domain/TraitKey.html" title="class in com.guflimc.brick.creatures.api.domain">TraitKey</a>&lt;<a href="CreatureManager.html" title="type parameter in CreatureManager">C</a>&gt;&nbsp;key)</span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="traits()">
+<h3>traits</h3>
+<div class="member-signature"><span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collection.html" title="class or interface in java.util" class="external-link">Collection</a>&lt;<a href="domain/TraitKey.html" title="class in com.guflimc.brick.creatures.api.domain">TraitKey</a>&lt;<a href="CreatureManager.html" title="type parameter in CreatureManager">C</a>&gt;&gt;</span>&nbsp;<span class="element-name">traits</span>()</div>
+</section>
+</li>
+<li>
+<section class="detail" id="findTrait(java.lang.String)">
+<h3>findTrait</h3>
+<div class="member-signature"><span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Optional.html" title="class or interface in java.util" class="external-link">Optional</a>&lt;<a href="domain/TraitKey.html" title="class in com.guflimc.brick.creatures.api.domain">TraitKey</a>&lt;<a href="CreatureManager.html" title="type parameter in CreatureManager">C</a>&gt;&gt;</span>&nbsp;<span class="element-name">findTrait</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name)</span></div>
 </section>
 </li>
 </ul>

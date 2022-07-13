@@ -1,1 +1,1 @@
-packageSearchIndex = [{"l":"All Packages","u":"allpackages-index.html"},{"l":"com.guflimc.brick.creatures.api"},{"l":"com.guflimc.brick.creatures.api.domain"},{"l":"com.guflimc.brick.creatures.api.meta"},{"l":"com.guflimc.brick.creatures.api.traits"}];updateSearchResults();
+packageSearchIndex = [{"l":"All Packages","u":"allpackages-index.html"},{"l":"com.guflimc.brick.creatures.api"},{"l":"com.guflimc.brick.creatures.api.domain"}];updateSearchResults();

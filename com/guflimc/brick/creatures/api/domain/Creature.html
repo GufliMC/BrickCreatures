@@ -68,11 +68,11 @@ loadScripts(document, 'script');</script>
 <!-- ======== START OF CLASS DATA ======== -->
 <div class="header">
 <div class="sub-title"><span class="package-label-in-type">Package</span>&nbsp;<a href="package-summary.html">com.guflimc.brick.creatures.api.domain</a></div>
-<h1 title="Interface Creature" class="title">Interface Creature&lt;T&gt;</h1>
+<h1 title="Interface Creature" class="title">Interface Creature</h1>
 </div>
 <section class="class-description" id="class-description">
 <hr>
-<div class="type-signature"><span class="modifiers">public interface </span><span class="element-name type-name-label">Creature&lt;T&gt;</span></div>
+<div class="type-signature"><span class="modifiers">public interface </span><span class="element-name type-name-label">Creature</span></div>
 </section>
 <section class="summary">
 <ul class="summary-list">
@@ -88,22 +88,29 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#addTrait(com.guflimc.brick.creatures.api.domain.Trait)" class="member-name-link">addTrait</a><wbr>(<a href="Trait.html" title="interface in com.guflimc.brick.creatures.api.domain">Trait</a>&nbsp;trait)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#despawn()" class="member-name-link">despawn</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="Creature.html" title="type parameter in Creature">T</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#entity()" class="member-name-link">entity</a>()</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#addTrait(com.guflimc.brick.creatures.api.domain.TraitKey)" class="member-name-link">addTrait</a><wbr>(<a href="TraitKey.html" title="class in com.guflimc.brick.creatures.api.domain">TraitKey</a>&lt;?&gt;&nbsp;key)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/UUID.html" title="class or interface in java.util" class="external-link">UUID</a></code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#id()" class="member-name-link">id</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#name()" class="member-name-link">name</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>com.guflimc.brick.maths.api.geo.Position</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#position()" class="member-name-link">position</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#refresh()" class="member-name-link">refresh</a>()</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#removeTrait(com.guflimc.brick.creatures.api.domain.TraitKey)" class="member-name-link">removeTrait</a><wbr>(<a href="TraitKey.html" title="class in com.guflimc.brick.creatures.api.domain">TraitKey</a>&lt;?&gt;&nbsp;key)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#setHologram(net.kyori.adventure.text.Component)" class="member-name-link">setHologram</a><wbr>(net.kyori.adventure.text.Component&nbsp;hologram)</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#setHumanSkin(java.lang.String,java.lang.String)" class="member-name-link">setHumanSkin</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;textures,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;signature)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#setPosition(com.guflimc.brick.maths.api.geo.Position)" class="member-name-link">setPosition</a><wbr>(com.guflimc.brick.maths.api.geo.Position&nbsp;position)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="TraitKey.html" title="class in com.guflimc.brick.creatures.api.domain">TraitKey</a>&lt;?&gt;&gt;</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#traits()" class="member-name-link">traits</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
 </div>
 </div>
@@ -126,33 +133,46 @@ loadScripts(document, 'script');</script>
 </section>
 </li>
 <li>
-<section class="detail" id="entity()">
-<h3>entity</h3>
-<div class="member-signature"><span class="return-type"><a href="Creature.html" title="type parameter in Creature">T</a></span>&nbsp;<span class="element-name">entity</span>()</div>
+<section class="detail" id="name()">
+<h3>name</h3>
+<div class="member-signature"><span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">name</span>()</div>
 </section>
 </li>
 <li>
-<section class="detail" id="setHologram(net.kyori.adventure.text.Component)">
-<h3>setHologram</h3>
-<div class="member-signature"><span class="return-type">void</span>&nbsp;<span class="element-name">setHologram</span><wbr><span class="parameters">(net.kyori.adventure.text.Component&nbsp;hologram)</span></div>
+<section class="detail" id="position()">
+<h3>position</h3>
+<div class="member-signature"><span class="return-type">com.guflimc.brick.maths.api.geo.Position</span>&nbsp;<span class="element-name">position</span>()</div>
 </section>
 </li>
 <li>
-<section class="detail" id="addTrait(com.guflimc.brick.creatures.api.domain.Trait)">
+<section class="detail" id="setPosition(com.guflimc.brick.maths.api.geo.Position)">
+<h3>setPosition</h3>
+<div class="member-signature"><span class="return-type">void</span>&nbsp;<span class="element-name">setPosition</span><wbr><span class="parameters">(com.guflimc.brick.maths.api.geo.Position&nbsp;position)</span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="setHumanSkin(java.lang.String,java.lang.String)">
+<h3>setHumanSkin</h3>
+<div class="member-signature"><span class="return-type">void</span>&nbsp;<span class="element-name">setHumanSkin</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;textures,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;signature)</span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="traits()">
+<h3>traits</h3>
+<div class="member-signature"><span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="TraitKey.html" title="class in com.guflimc.brick.creatures.api.domain">TraitKey</a>&lt;?&gt;&gt;</span>&nbsp;<span class="element-name">traits</span>()</div>
+</section>
+</li>
+<li>
+<section class="detail" id="addTrait(com.guflimc.brick.creatures.api.domain.TraitKey)">
 <h3>addTrait</h3>
-<div class="member-signature"><span class="return-type">void</span>&nbsp;<span class="element-name">addTrait</span><wbr><span class="parameters">(<a href="Trait.html" title="interface in com.guflimc.brick.creatures.api.domain">Trait</a>&nbsp;trait)</span></div>
+<div class="member-signature"><span class="return-type">void</span>&nbsp;<span class="element-name">addTrait</span><wbr><span class="parameters">(<a href="TraitKey.html" title="class in com.guflimc.brick.creatures.api.domain">TraitKey</a>&lt;?&gt;&nbsp;key)</span></div>
 </section>
 </li>
 <li>
-<section class="detail" id="despawn()">
-<h3>despawn</h3>
-<div class="member-signature"><span class="return-type">void</span>&nbsp;<span class="element-name">despawn</span>()</div>
-</section>
-</li>
-<li>
-<section class="detail" id="refresh()">
-<h3>refresh</h3>
-<div class="member-signature"><span class="return-type">void</span>&nbsp;<span class="element-name">refresh</span>()</div>
+<section class="detail" id="removeTrait(com.guflimc.brick.creatures.api.domain.TraitKey)">
+<h3>removeTrait</h3>
+<div class="member-signature"><span class="return-type">void</span>&nbsp;<span class="element-name">removeTrait</span><wbr><span class="parameters">(<a href="TraitKey.html" title="class in com.guflimc.brick.creatures.api.domain">TraitKey</a>&lt;?&gt;&nbsp;key)</span></div>
 </section>
 </li>
 </ul>

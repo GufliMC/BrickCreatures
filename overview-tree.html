@@ -51,9 +51,7 @@ loadScripts(document, 'script');</script>
 <span class="package-hierarchy-label">Package Hierarchies:</span>
 <ul class="horizontal">
 <li><a href="com/guflimc/brick/creatures/api/package-tree.html">com.guflimc.brick.creatures.api</a>, </li>
-<li><a href="com/guflimc/brick/creatures/api/domain/package-tree.html">com.guflimc.brick.creatures.api.domain</a>, </li>
-<li><a href="com/guflimc/brick/creatures/api/meta/package-tree.html">com.guflimc.brick.creatures.api.meta</a>, </li>
-<li><a href="com/guflimc/brick/creatures/api/traits/package-tree.html">com.guflimc.brick.creatures.api.traits</a></li>
+<li><a href="com/guflimc/brick/creatures/api/domain/package-tree.html">com.guflimc.brick.creatures.api.domain</a></li>
 </ul>
 </div>
 <section class="hierarchy">
@@ -61,10 +59,13 @@ loadScripts(document, 'script');</script>
 <ul>
 <li class="circle">java.lang.<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" class="type-name-link external-link" title="class or interface in java.lang">Object</a>
 <ul>
-<li class="circle">com.guflimc.brick.creatures.api.meta.<a href="com/guflimc/brick/creatures/api/meta/PlayerSkin.html" class="type-name-link" title="class in com.guflimc.brick.creatures.api.meta">PlayerSkin</a></li>
-<li class="circle">com.guflimc.brick.creatures.api.meta.<a href="com/guflimc/brick/creatures/api/meta/Position.html" class="type-name-link" title="class in com.guflimc.brick.creatures.api.meta">Position</a></li>
-<li class="circle">com.guflimc.brick.creatures.api.domain.<a href="com/guflimc/brick/creatures/api/domain/TraitHandler.html" class="type-name-link" title="class in com.guflimc.brick.creatures.api.domain">TraitHandler</a>&lt;T&gt;</li>
-<li class="circle">com.guflimc.brick.creatures.api.traits.<a href="com/guflimc/brick/creatures/api/traits/TraitRegistry.html" class="type-name-link" title="class in com.guflimc.brick.creatures.api.traits">TraitRegistry</a></li>
+<li class="circle">com.guflimc.brick.creatures.api.<a href="com/guflimc/brick/creatures/api/CreatureAPI.html" class="type-name-link" title="class in com.guflimc.brick.creatures.api">CreatureAPI</a></li>
+<li class="circle">java.lang.<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Record.html" class="type-name-link external-link" title="class or interface in java.lang">Record</a>
+<ul>
+<li class="circle">com.guflimc.brick.creatures.api.domain.<a href="com/guflimc/brick/creatures/api/domain/TraitKey.html" class="type-name-link" title="class in com.guflimc.brick.creatures.api.domain">TraitKey</a>&lt;T&gt;</li>
+</ul>
+</li>
+<li class="circle">com.guflimc.brick.creatures.api.domain.<a href="com/guflimc/brick/creatures/api/domain/TraitLifecycle.html" class="type-name-link" title="class in com.guflimc.brick.creatures.api.domain">TraitLifecycle</a>&lt;T&gt;</li>
 </ul>
 </li>
 </ul>
@@ -72,11 +73,9 @@ loadScripts(document, 'script');</script>
 <section class="hierarchy">
 <h2 title="Interface Hierarchy">Interface Hierarchy</h2>
 <ul>
-<li class="circle">com.guflimc.brick.creatures.api.domain.<a href="com/guflimc/brick/creatures/api/domain/Creature.html" class="type-name-link" title="interface in com.guflimc.brick.creatures.api.domain">Creature</a>&lt;T&gt;</li>
-<li class="circle">com.guflimc.brick.creatures.api.<a href="com/guflimc/brick/creatures/api/CreatureManager.html" class="type-name-link" title="interface in com.guflimc.brick.creatures.api">CreatureManager</a>&lt;WORLD,<wbr>ENTITY,<wbr>ENTITYTYPE&gt;</li>
-<li class="circle">com.guflimc.brick.creatures.api.domain.<a href="com/guflimc/brick/creatures/api/domain/PersistentCreature.html" class="type-name-link" title="interface in com.guflimc.brick.creatures.api.domain">PersistentCreature</a></li>
-<li class="circle">com.guflimc.brick.creatures.api.domain.<a href="com/guflimc/brick/creatures/api/domain/PersistentSpawn.html" class="type-name-link" title="interface in com.guflimc.brick.creatures.api.domain">PersistentSpawn</a></li>
-<li class="circle">com.guflimc.brick.creatures.api.domain.<a href="com/guflimc/brick/creatures/api/domain/Trait.html" class="type-name-link" title="interface in com.guflimc.brick.creatures.api.domain">Trait</a></li>
+<li class="circle">com.guflimc.brick.creatures.api.domain.<a href="com/guflimc/brick/creatures/api/domain/Creature.html" class="type-name-link" title="interface in com.guflimc.brick.creatures.api.domain">Creature</a></li>
+<li class="circle">com.guflimc.brick.creatures.api.<a href="com/guflimc/brick/creatures/api/CreatureManager.html" class="type-name-link" title="interface in com.guflimc.brick.creatures.api">CreatureManager</a>&lt;C,<wbr>T&gt;</li>
+<li class="circle">com.guflimc.brick.creatures.api.domain.<a href="com/guflimc/brick/creatures/api/domain/TraitLifecycle.Creator.html" class="type-name-link" title="interface in com.guflimc.brick.creatures.api.domain">TraitLifecycle.Creator</a>&lt;T&gt;</li>
 </ul>
 </section>
 </main>
