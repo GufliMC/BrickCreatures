@@ -20,4 +20,11 @@ public abstract class TraitLifecycle<T extends Creature> {
 
     public void onDamage() {}
 
+    //
+
+    @FunctionalInterface
+    public interface Creator<T extends Creature> {
+        TraitLifecycle<T> create(T creature);
+    }
+
 }

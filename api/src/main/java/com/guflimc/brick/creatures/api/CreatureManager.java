@@ -1,15 +1,15 @@
 package com.guflimc.brick.creatures.api;
 
 import com.guflimc.brick.creatures.api.domain.Creature;
+import com.guflimc.brick.creatures.api.domain.TraitKey;
 import com.guflimc.brick.creatures.api.domain.TraitLifecycle;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Collection;
 import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
-import java.util.function.Function;
 
-public interface CreatureManager<C extends Creature, E, T> {
+public interface CreatureManager<C extends Creature, T> {
 
     void reload();
 
@@ -27,9 +27,13 @@ public interface CreatureManager<C extends Creature, E, T> {
 
     CompletableFuture<Void> merge(@NotNull Creature creature);
 
-    void registerTrait(String name, Function<E, TraitLifecycle<C>> creator);
+    void registerTrait(TraitKey<C> key);
 
-    void unregisterTrait(String name);
+    void unregisterTrait(TraitKey<C> key);
+
+    Collection<TraitKey<C>> traits();
+
+    Optional<TraitKey<C>> findTrait(String name);
 
 
 }

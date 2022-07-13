@@ -1,6 +1,8 @@
 package com.guflimc.brick.creatures.common.domain;
 
+import com.guflimc.brick.creatures.api.CreatureAPI;
 import com.guflimc.brick.creatures.api.domain.Creature;
+import com.guflimc.brick.creatures.api.domain.TraitKey;
 import com.guflimc.brick.maths.api.geo.Location;
 import com.guflimc.brick.maths.api.geo.Position;
 import com.guflimc.brick.maths.database.api.LocationConverter;
@@ -13,7 +15,9 @@ import org.hibernate.type.SqlTypes;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Entity
 @Table(name = "creatures", uniqueConstraints = {
@@ -126,18 +130,25 @@ public class DCreature implements Creature {
     }
 
     @Override
-    public List<String> traits() {
-        return traits.stream().map(DCreatureTrait::trait).toList();
+    public List<TraitKey<?>> traits() {
+        return traits.stream()
+                .map(dt -> CreatureAPI.get().findTrait(dt.trait()).orElse(null))
+                .filter(Objects::nonNull)
+                .collect(Collectors.toList());
     }
 
     @Override
-    public void addTrait(String trait) {
-        traits.add(new DCreatureTrait(this, trait));
+    public void addTrait(TraitKey<?> trait) {
+        if ( traits.stream().anyMatch(t -> t.trait().equals(trait.name())) ) {
+            return;
+        }
+
+        traits.add(new DCreatureTrait(this, trait.name()));
     }
 
     @Override
-    public void removeTrait(String trait) {
-        traits.removeIf(t -> t.trait().equals(trait));
+    public void removeTrait(TraitKey<?> trait) {
+        traits.removeIf(t -> t.trait().equals(trait.name()));
     }
 
 }

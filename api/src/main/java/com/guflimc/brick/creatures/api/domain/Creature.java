@@ -17,10 +17,10 @@ public interface Creature {
 
     void setHumanSkin(String textures, String signature);
 
-    List<String> traits();
+    List<TraitKey<?>> traits();
 
-    void addTrait(String trait);
+    void addTrait(TraitKey<?> key);
 
-    void removeTrait(String trait);
+    void removeTrait(TraitKey<?> key);
 
 }

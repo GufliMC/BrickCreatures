@@ -1,6 +1,7 @@
 package com.guflimc.brick.creatures.minestom;
 
 import com.guflimc.brick.creatures.api.domain.Creature;
+import com.guflimc.brick.creatures.api.domain.TraitKey;
 import com.guflimc.brick.creatures.api.domain.TraitLifecycle;
 import com.guflimc.brick.creatures.common.BrickCreaturesDatabaseContext;
 import com.guflimc.brick.creatures.common.domain.DCreature;
@@ -12,17 +13,18 @@ import com.guflimc.brick.worlds.minestom.api.MinestomWorldAPI;
 import com.guflimc.brick.worlds.minestom.api.event.WorldLoadEvent;
 import com.guflimc.brick.worlds.minestom.api.world.MinestomWorld;
 import net.minestom.server.MinecraftServer;
-import net.minestom.server.entity.Entity;
 import net.minestom.server.entity.EntityType;
+import net.minestom.server.timer.TaskSchedule;
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.*;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Optional;
+import java.util.Set;
 import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CopyOnWriteArraySet;
-import java.util.function.Function;
 
 public class MinestomBrickCreatureManager implements MinestomCreatureManager {
 
@@ -31,7 +33,7 @@ public class MinestomBrickCreatureManager implements MinestomCreatureManager {
     private final BrickCreaturesDatabaseContext databaseContext;
 
     private final Set<MinestomBrickCreature> creatures = new CopyOnWriteArraySet<>();
-    private final Map<String, Function<Entity, TraitLifecycle<MinestomCreature>>> traits = new ConcurrentHashMap<>();
+    private final Set<TraitKey<MinestomCreature>> traits = new CopyOnWriteArraySet<>();
 
     public MinestomBrickCreatureManager(BrickCreaturesDatabaseContext databaseContext) {
         this.databaseContext = databaseContext;
@@ -41,7 +43,9 @@ public class MinestomBrickCreatureManager implements MinestomCreatureManager {
             MinecraftServer.getGlobalEventHandler().addListener(WorldLoadEvent.class, e -> load(e.world()));
         }
 
-        reload();
+        MinecraftServer.getSchedulerManager().scheduleTask(() -> {
+            creatures.forEach(c -> c.traitLifecycles.values().forEach(TraitLifecycle::onTick));
+        }, TaskSchedule.tick(1), TaskSchedule.tick(1));
     }
 
     private void load(World world) {
@@ -103,7 +107,7 @@ public class MinestomBrickCreatureManager implements MinestomCreatureManager {
     @Override
     public CompletableFuture<Void> persist(@NotNull Creature creature) {
         MinestomBrickCreature crea = (MinestomBrickCreature) creature;
-        crea.writeMetadata();
+        crea.write();
         return databaseContext.persistAsync(crea.domainCreature());
     }
 
@@ -119,18 +123,27 @@ public class MinestomBrickCreatureManager implements MinestomCreatureManager {
     @Override
     public CompletableFuture<Void> merge(@NotNull Creature creature) {
         MinestomBrickCreature crea = (MinestomBrickCreature) creature;
-        crea.writeMetadata();
+        crea.write();
         return databaseContext.mergeAsync(crea.domainCreature()).thenAccept(crea::setDomainCreature);
     }
 
     @Override
-    public void registerTrait(String name, Function<Entity, TraitLifecycle<MinestomCreature>> creator) {
-        traits.put(name, creator);
+    public void registerTrait(TraitKey<MinestomCreature> key) {
+        traits.add(key);
     }
 
     @Override
-    public void unregisterTrait(String name) {
-        traits.remove(name);
+    public void unregisterTrait(TraitKey<MinestomCreature> key) {
+        traits.remove(key);
     }
 
+    @Override
+    public Collection<TraitKey<MinestomCreature>> traits() {
+        return Collections.unmodifiableSet(traits);
+    }
+
+    @Override
+    public Optional<TraitKey<MinestomCreature>> findTrait(String name) {
+        return traits.stream().filter(t -> t.name().equals(name)).findFirst();
+    }
 }

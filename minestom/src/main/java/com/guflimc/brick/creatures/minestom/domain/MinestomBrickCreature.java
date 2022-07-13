@@ -1,5 +1,7 @@
 package com.guflimc.brick.creatures.minestom.domain;
 
+import com.guflimc.brick.creatures.api.domain.TraitKey;
+import com.guflimc.brick.creatures.api.domain.TraitLifecycle;
 import com.guflimc.brick.creatures.common.domain.DCreature;
 import com.guflimc.brick.creatures.minestom.api.domain.MinestomCreature;
 import com.guflimc.brick.creatures.minestom.api.domain.MinestomTraitLifecycle;
@@ -9,7 +11,7 @@ import com.guflimc.brick.maths.api.geo.Position;
 import com.guflimc.brick.maths.minestom.api.MinestomMaths;
 import com.guflimc.brick.worlds.api.world.World;
 import net.minestom.server.MinecraftServer;
-import net.minestom.server.entity.Entity;
+import net.minestom.server.entity.EntityCreature;
 import net.minestom.server.entity.EntityType;
 import net.minestom.server.entity.Metadata;
 import net.minestom.server.entity.metadata.EntityMeta;
@@ -28,7 +30,7 @@ public class MinestomBrickCreature implements MinestomCreature {
     private @NotNull DCreature domainCreature;
     private final CreatureEntity entity;
 
-    protected final Map<String, MinestomTraitLifecycle> traitLifecycles = new HashMap<>();
+    public final Map<TraitKey<?>, MinestomTraitLifecycle> traitLifecycles = new HashMap<>();
 
     public MinestomBrickCreature(@NotNull DCreature domainCreature) {
         this.domainCreature = domainCreature;
@@ -43,9 +45,9 @@ public class MinestomBrickCreature implements MinestomCreature {
             this.entity = new CreatureEntity(type);
         }
 
-        readMetadata();
+        read();
 
-        // TODO traits
+        traits().forEach(this::initTrait);
     }
 
     public void setDomainCreature(@NotNull DCreature creature) {
@@ -78,49 +80,52 @@ public class MinestomBrickCreature implements MinestomCreature {
     @Override
     public void despawn() {
         entity.despawn();
+
+        traitLifecycles.values().forEach(TraitLifecycle::onDisable);
     }
 
     @Override
-    public Entity entity() {
+    public EntityCreature entity() {
         return entity;
     }
 
     /**
      * domain -> entity
      */
-    public void readMetadata() {
-        if (domainCreature.metadata() == null) {
-            return;
-        }
+    public void read() {
+        if (domainCreature.metadata() != null) {
+            byte[] bytes = Base64.getDecoder().decode(domainCreature.metadata());
+            BinaryReader reader = new BinaryReader(bytes);
+            EntityMetaDataPacket packet = new EntityMetaDataPacket(reader);
 
-        // the metadata packet contains a native method to convert bytes -> metadata entries
-        byte[] bytes = Base64.getDecoder().decode(domainCreature.metadata());
-        BinaryReader reader = new BinaryReader(bytes);
-        EntityMetaDataPacket packet = new EntityMetaDataPacket(reader);
+            try {
+                // need some reflection to put the parsed entries in the metadata object of the entity
+                Field field = EntityMeta.class.getDeclaredField("metadata");
+                field.trySetAccessible();
 
-        try {
-            // need some reflection to put the parsed entries in the metadata object of the entity
-            Field field = EntityMeta.class.getDeclaredField("metadata");
-            field.trySetAccessible();
-
-            Metadata metadata = (Metadata) field.get(entity.getEntityMeta());
-            Map<Integer, Metadata.Entry<?>> entries = packet.entries();
-            for (int index : entries.keySet()) {
-                metadata.getEntries().put(index, entries.get(index));
+                Metadata metadata = (Metadata) field.get(entity.getEntityMeta());
+                Map<Integer, Metadata.Entry<?>> entries = packet.entries();
+                for (int index : entries.keySet()) {
+                    metadata.getEntries().put(index, entries.get(index));
+                }
+            } catch (IllegalAccessException | NoSuchFieldException e) {
+                e.printStackTrace();
             }
-        } catch (IllegalAccessException | NoSuchFieldException e) {
-            e.printStackTrace();
         }
+
+        // TODO other stuff
     }
 
     /**
      * entity -> domain
      */
-    public void writeMetadata() {
+    public void write() {
         // the metadata packet contains a native method to convert metadata -> bytes
         BinaryWriter writer = new BinaryWriter();
         entity.getMetadataPacket().write(writer);
         domainCreature.setMetadata(Base64.getEncoder().encodeToString(writer.toByteArray()));
+
+        // TODO other stuff
     }
 
     //
@@ -162,26 +167,30 @@ public class MinestomBrickCreature implements MinestomCreature {
     }
 
     @Override
-    public List<String> traits() {
+    public List<TraitKey<?>> traits() {
         return domainCreature.traits();
     }
 
     @Override
-    public void addTrait(String trait) {
-        domainCreature.addTrait(trait);
-        // TODO
-
-        // create and start the trait lifecycle
+    public void addTrait(TraitKey<?> key) {
+        domainCreature.addTrait(key);
+        initTrait(key);
     }
 
     @Override
-    public void removeTrait(String trait) {
-        domainCreature.removeTrait(trait);
+    public void removeTrait(TraitKey<?> key) {
+        domainCreature.removeTrait(key);
 
-        MinestomTraitLifecycle lf = traitLifecycles.remove(trait);
+        MinestomTraitLifecycle lf = traitLifecycles.remove(key);
         if (lf != null) {
             lf.onDisable();
         }
+    }
+
+    private void initTrait(TraitKey<?> key) {
+        MinestomTraitLifecycle lf = (MinestomTraitLifecycle) ((TraitKey<MinestomCreature>) key).creator().create(this);
+        traitLifecycles.put(key, lf);
+        lf.onEnable();
     }
 
 }

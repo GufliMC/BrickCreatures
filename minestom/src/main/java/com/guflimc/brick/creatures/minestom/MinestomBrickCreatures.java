@@ -4,13 +4,18 @@ import cloud.commandframework.annotations.AnnotationParser;
 import cloud.commandframework.execution.CommandExecutionCoordinator;
 import cloud.commandframework.meta.SimpleCommandMeta;
 import com.google.gson.Gson;
+import com.guflimc.brick.creatures.api.domain.Creature;
+import com.guflimc.brick.creatures.api.domain.TraitKey;
 import com.guflimc.brick.creatures.common.BrickCreaturesConfig;
 import com.guflimc.brick.creatures.common.BrickCreaturesDatabaseContext;
-import com.guflimc.brick.creatures.minestom.api.MinestomCreaturesAPI;
+import com.guflimc.brick.creatures.common.arguments.CreatureArgument;
+import com.guflimc.brick.creatures.common.arguments.TraitKeyArgument;
+import com.guflimc.brick.creatures.common.commands.CreatureCommands;
+import com.guflimc.brick.creatures.minestom.api.MinestomCreatureAPI;
 import com.guflimc.brick.creatures.minestom.api.domain.MinestomCreature;
-import com.guflimc.brick.creatures.minestom.arguments.CreatureArgument;
 import com.guflimc.brick.creatures.minestom.arguments.MetadataMethodArgument;
-import com.guflimc.brick.creatures.minestom.commands.MinestomCreaturesCommands;
+import com.guflimc.brick.creatures.minestom.commands.MinestomCreatureCommands;
+import com.guflimc.brick.creatures.minestom.traits.LookAtClosestPlayer;
 import com.guflimc.brick.i18n.minestom.api.MinestomI18nAPI;
 import com.guflimc.brick.i18n.minestom.api.namespace.MinestomNamespace;
 import com.guflimc.cloud.minestom.MinestomCommandManager;
@@ -51,7 +56,13 @@ public class MinestomBrickCreatures extends Extension {
         databaseContext = new BrickCreaturesDatabaseContext(config.database);
 
         MinestomBrickCreatureManager manager = new MinestomBrickCreatureManager(databaseContext);
-        MinestomCreaturesAPI.registerManager(manager);
+        MinestomCreatureAPI.registerManager(manager);
+
+        // TRAITS
+        manager.registerTrait(LookAtClosestPlayer.KEY);
+
+        // LOAD CREATURES
+        manager.reload();
 
         // TRANSLATIONS
         MinestomNamespace namespace = new MinestomNamespace(this, Locale.ENGLISH);
@@ -65,8 +76,14 @@ public class MinestomBrickCreatures extends Extension {
                 Function.identity()
         );
 
+        commandManager.parserRegistry().registerParserSupplier(TypeToken.get(Creature.class), parserParameters ->
+                new CreatureArgument.CreatureParser<>());
+
         commandManager.parserRegistry().registerParserSupplier(TypeToken.get(MinestomCreature.class), parserParameters ->
                 new CreatureArgument.CreatureParser<>());
+
+        commandManager.parserRegistry().registerParserSupplier(TypeToken.get(TraitKey.class), parserParameters ->
+                new TraitKeyArgument.TraitKeyParser<>());
 
         commandManager.parserRegistry().registerNamedParserSupplier("metadata", parserParameters ->
                 new MetadataMethodArgument.MetadataMethodParser<>());
@@ -77,7 +94,8 @@ public class MinestomBrickCreatures extends Extension {
                 parameters -> SimpleCommandMeta.empty()
         );
 
-        annotationParser.parse(new MinestomCreaturesCommands(manager));
+        annotationParser.parse(new CreatureCommands(manager));
+        annotationParser.parse(new MinestomCreatureCommands(manager));
 
         getLogger().info("Enabled " + nameAndVersion() + ".");
     }

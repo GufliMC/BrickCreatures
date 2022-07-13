@@ -18,26 +18,18 @@ and place it in the extension folder of your minestom server.
 A creature contains all the necessary information that makes the entity unique (name, skin, traits, ...). A single
 creature can be used for multiple spawns, changing a creature will also update all spawns.
 
-| Command                                        | Permission                              |
-|------------------------------------------------|-----------------------------------------|
-| /bc creature list                              | brickcreatures.creature.list            |
-| /bc creature create (name) (entitytype)        | brickcreatures.creature.create          |
-| /bc creature delete (creature)                 | brickcreatures.creature.delete          |
-| /bc creature edit customname (creature) (name) | brickcreatures.creature.edit.customname |
-| /bc creature edit skin (creature) (player)     | brickcreatures.creature.edit.skin       |
-
-### Spawns
-
-A spawn is a position in the world where an persistentCreature is spawned with a specific creature. You can create
-multiple spawns with the same creature.
-
-| Command                            | Permission                         |
-|------------------------------------|------------------------------------|
-| /bc spawn list                     | brickcreatures.spawn.list          |
-| /bc spawn create (name) (creature) | brickcreatures.spawn.create        |
-| /bc spawn delete (spawn)           | brickcreatures.spawn.delete        |
-| /bc spawn edit lookhere (spawn)    | brickcreatures.spawn.edit.lookhere |
-| /bc spawn edit tphere (spawn)      | brickcreatures.spawn.edit.tphere   |
+| Command                              | Permission                  |
+|--------------------------------------|-----------------------------|
+| /bc list                             | brickcreatures.list         |
+| /bc create (name) (entitytype)       | brickcreatures.create       |
+| /bc delete (creature)                | brickcreatures.delete       |
+| /bc setskin (creature) (playername)  | brickcreatures.setskin      |
+| /bc setmeta (creature) (key) (value) | brickcreatures.setmeta      |
+| /bc tphere (creature)                | brickcreatures.tphere       |
+| /bc lookhere (creature)              | brickcreatures.lookhere     |
+| /bc trait add (creature) (trait)     | brickcreatures.trait.add    |
+| /bc trait remove (creature) (trait)  | brickcreatures.trait.remove |
+| /bc trait list (creature)            | brickcreatures.trait.list   |
 
 ## Database
 
@@ -69,11 +61,22 @@ repositories {
 }
 
 dependencies {
-    implementation 'com.guflimc.brick.creatures:api:1.0-SNAPSHOT'
+    implementation 'com.guflimc.brick.creatures:minestom-api:1.0-SNAPSHOT'
 }
 ```
 
 ### Usage
 
 Check the [javadocs](https://guflimc.github.io/BrickCreatures/)
+
+```java
+
+MinestomCreature creature = MinestomCreatureAPI.get().create(EntityType.PLAYER);
+MinestomCreatureAPI.get().persist(creature); // insert into database
+MinestomCreatureAPI.get().merge(creature); // update in database
+MinestomCreatureAPI.get().remove(creature); // delete from database
+
+MinestomCreatureAPI.get().registerTrait(new TraitKey(...));
+
+```
 

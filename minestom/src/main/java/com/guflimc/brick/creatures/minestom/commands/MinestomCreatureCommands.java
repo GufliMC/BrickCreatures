@@ -27,18 +27,12 @@ import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-public class MinestomCreaturesCommands {
+public class MinestomCreatureCommands {
 
     private final MinestomBrickCreatureManager manager;
 
-    public MinestomCreaturesCommands(MinestomBrickCreatureManager manager) {
+    public MinestomCreatureCommands(MinestomBrickCreatureManager manager) {
         this.manager = manager;
-    }
-
-    @CommandMethod("bc reload")
-    public void reload(Audience sender) {
-        manager.reload();
-        I18nAPI.get(this).send(sender, "cmd.reload");
     }
 
     @CommandMethod("bc create <name> <type>")
@@ -65,20 +59,6 @@ public class MinestomCreaturesCommands {
         }
     }
 
-    @CommandMethod("bc delete <creature>")
-    public void creatureDelete(Audience sender,
-                               @Argument(value = "creature") MinestomCreature creature
-    ) {
-        manager.remove(creature);
-        I18nAPI.get(this).send(sender, "cmd.delete", creature.name());
-    }
-
-    @CommandMethod("bc list")
-    public void creatureList(Audience sender) {
-        I18nAPI.get(this).send(sender, "cmd.list",
-                manager.creatures().stream().map(Creature::name).collect(Collectors.toList()));
-    }
-
     @CommandMethod("bc tphere <creature>")
     public void creatureTeleporthere(Player sender,
                                      @Argument(value = "creature") MinestomCreature creature
@@ -94,17 +74,9 @@ public class MinestomCreaturesCommands {
     public void creatureLookhere(Player sender,
                                  @Argument(value = "creature") MinestomCreature creature) {
 
-        EntityType type = creature.entity().getEntityType();
+        creature.entity().lookAt(sender.getPosition().add(0, 1.8, 0));
+        creature.setPosition(MinestomMaths.toPosition(creature.entity().getPosition()));
 
-        Pos playerpos = sender.getPosition().add(0, 1.6, 0);
-        Pos entitypos = MinestomMaths.toPos(creature.position()).add(0, type.height() * 0.85, 0);
-        Vec delta = playerpos.sub(entitypos).asVec().normalize();
-
-        Pos result = MinestomMaths.toPos(creature.position());
-        result = result.withYaw(PositionUtils.getLookYaw(delta.x(), delta.z()));
-        result = result.withPitch(PositionUtils.getLookPitch(delta.x(), delta.y(), delta.z()));
-
-        creature.setPosition(MinestomMaths.toPosition(result));
         manager.merge(creature);
 
         I18nAPI.get(this).send(sender, "cmd.edit.lookhere", creature.name());

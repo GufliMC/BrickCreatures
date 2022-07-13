@@ -1,11 +1,6 @@
 package com.guflimc.brick.creatures.minestom.entity;
 
-import com.google.gson.Gson;
-import kotlin.random.Random;
 import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.format.NamedTextColor;
-import net.kyori.adventure.text.serializer.gson.GsonComponentSerializer;
-import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import net.minestom.server.MinecraftServer;
 import net.minestom.server.attribute.Attribute;
 import net.minestom.server.entity.EntityType;
@@ -39,7 +34,6 @@ public class CreatureHuman extends CreatureEntity {
     public CreatureHuman() {
         super(EntityType.PLAYER, UUID.randomUUID());
         this.username = invisName();
-        System.out.println(username);
 
         team = MinecraftServer.getTeamManager().createTeam(RandomStringUtils.randomAlphanumeric(8));
         team.setNameTagVisibility(TeamsPacket.NameTagVisibility.NEVER);
@@ -55,7 +49,7 @@ public class CreatureHuman extends CreatureEntity {
     private static String invisName() {
         String str = Integer.toHexString(++COUNTER);
         StringBuilder sb = new StringBuilder();
-        for (char c: str.toCharArray()) {
+        for (char c : str.toCharArray()) {
             sb.append("\u00A7").append(c);
         }
         return sb.toString().trim();
@@ -72,7 +66,7 @@ public class CreatureHuman extends CreatureEntity {
     public void update(long time) {
         super.update(time);
 
-        if ( getCustomName() != customName ) {
+        if (getCustomName() != customName) {
             customName = getCustomName();
 
             team.setNameTagVisibility(customName != null ? TeamsPacket.NameTagVisibility.ALWAYS : TeamsPacket.NameTagVisibility.NEVER);
@@ -119,7 +113,7 @@ public class CreatureHuman extends CreatureEntity {
     protected @NotNull PlayerInfoPacket getAddPlayerPacket() {
         List<PlayerInfoPacket.AddPlayer.Property> properties = new ArrayList<>();
 
-        if ( this.skinTextures != null ) {
+        if (this.skinTextures != null) {
             properties.add(new PlayerInfoPacket.AddPlayer.Property("textures", skinTextures, skinSignature));
         }
 

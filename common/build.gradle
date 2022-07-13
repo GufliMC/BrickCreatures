@@ -12,4 +12,9 @@ dependencies {
     api 'com.guflimc.brick.orm:common:+'
 
     implementation 'com.guflimc.brick.maths:database-api:+'
+
+    implementation 'cloud.commandframework:cloud-core:+'
+    implementation 'cloud.commandframework:cloud-annotations:+'
+
+    compileOnly 'com.guflimc.brick.i18n:api:+'
 }
