@@ -40,14 +40,3 @@ minestomExtension {
     entrypoint = "com.guflimc.brick.creatures.minestom.MinestomBrickCreatures"
     dependencies = ["BrickI18n", "BrickWorlds"]
 }
-
-shadowJar.doLast {
-    copy {
-        from "build/libs/" + archiveFileName.get()
-        into 'C:\\Users\\joris\\Nextcloud\\WollyMC\\testservers\\lobby\\extensions'
-    }
-}
-
-//
-//println project.configurations.runtimeClasspath.getResolvedConfiguration().getLenientConfiguration()
-//        .getArtifacts().stream().map(art -> art.moduleVersion.id).toList()
