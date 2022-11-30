@@ -6,13 +6,13 @@ plugins {
 group 'com.guflimc.brick.creatures'
 version = scmVersion.version
 
-def javadocProjects = [project(':api')]
+def javadocProjects = [project(':api'), project(':spigot-api')]
 ext.set("javadocProjects", javadocProjects)
 
-def publishProjects = [project(':api')]
+def publishProjects = [project(':api'), project(':spigot-api')]
 ext.set("publishProjects", publishProjects)
 
-def shadowProjects = [project(':minestom')]
+def shadowProjects = [project(':spigot')]
 ext.set("shadowProjects", shadowProjects)
 
 subprojects {
@@ -30,6 +30,6 @@ apply from: 'https://guflimc.github.io/scripts/gradle/subprojects-shadow.gradle'
 apply from: 'https://guflimc.github.io/scripts/gradle/subprojects-publish.gradle'
 
 if ( System.getProperty("os.name").toLowerCase().contains("windows") ) {
-    ext.set("shadowCopy", [(project(':minestom')): 'C:/Users/joris/Nextcloud/WollyMC/testservers/lobby/extensions'])
+    ext.set("shadowCopy", [(project(':spigot')): 'D:/Documents/testservers/1.19 - cob/plugins'])
     apply from: 'https://guflimc.github.io/scripts/gradle/subprojects-shadow-copy.gradle'
 }

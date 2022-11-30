@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<migration xmlns="http://ebean-orm.github.io/xml/ns/dbmigration">
+    <changeSet type="apply">
+        <createTable name="creatures" identityType="external" pkName="pk_creatures">
+            <column name="id" type="uuid" primaryKey="true" identity="true"/>
+            <column name="name" type="varchar" notnull="true"/>
+            <column name="type" type="varchar" notnull="true"/>
+            <column name="metadata" type="varchar(8192)"/>
+            <column name="created_at" type="timestamp" notnull="true"/>
+            <column name="update_at" type="timestamp" notnull="true"/>
+            <uniqueConstraint name="uq_creatures_name" columnNames="name" oneToOne="false" nullableColumns=""/>
+        </createTable>
+    </changeSet>
+</migration>

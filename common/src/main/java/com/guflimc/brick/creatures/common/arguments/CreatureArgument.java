@@ -45,7 +45,7 @@ public final class CreatureArgument<C> extends CommandArgument<C, Creature> {
             }
             inputQueue.remove();
 
-            Creature creature = CreatureAPI.get().find(input).orElse(null);
+            Creature creature = CreatureAPI.get().findCreature(input).orElse(null);
             if (creature == null) {
                 return ArgumentParseResult.failure(new Exception("Cannot find creature with name: " + input + "."));
             }

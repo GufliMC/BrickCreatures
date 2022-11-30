@@ -1,23 +1,12 @@
 package com.guflimc.brick.creatures.common.domain;
 
-import com.guflimc.brick.creatures.api.CreatureAPI;
 import com.guflimc.brick.creatures.api.domain.Creature;
-import com.guflimc.brick.creatures.api.domain.TraitKey;
-import com.guflimc.brick.maths.api.geo.Location;
-import com.guflimc.brick.maths.api.geo.Position;
-import com.guflimc.brick.maths.database.api.LocationConverter;
-import jakarta.persistence.*;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.JdbcTypeCode;
-import org.hibernate.annotations.UpdateTimestamp;
-import org.hibernate.type.SqlTypes;
+import io.ebean.annotation.WhenCreated;
+import io.ebean.annotation.WhenModified;
 
+import javax.persistence.*;
 import java.time.Instant;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 @Entity
 @Table(name = "creatures", uniqueConstraints = {
@@ -26,9 +15,7 @@ import java.util.stream.Collectors;
 public class DCreature implements Creature {
 
     @Id
-    @Basic
     @GeneratedValue
-    @JdbcTypeCode(SqlTypes.CHAR)
     private UUID id;
 
     @Column(nullable = false)
@@ -37,28 +24,13 @@ public class DCreature implements Creature {
     @Column(nullable = false)
     private String type;
 
-    @Convert(converter = LocationConverter.class)
-    @Column(nullable = false)
-    private Location location = new Location(null, 0, 0, 0, 0, 0);
-
-    @Column(length = 65565)
+    @Column(length = 8192)
     private String metadata;
 
-    @Column(length = 2048)
-    private String humanSkinTextures;
-
-    @Column(length = 2048)
-    private String humanSkinSignature;
-
-    @OneToMany(targetEntity = DCreatureTrait.class, mappedBy = "creature",
-            orphanRemoval = true, fetch = FetchType.EAGER,
-            cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE})
-    private final List<DCreatureTrait> traits = new ArrayList<>();
-
-    @CreationTimestamp
+    @WhenCreated
     private Instant createdAt;
 
-    @UpdateTimestamp
+    @WhenModified
     private Instant updateAt;
 
     //
@@ -85,24 +57,6 @@ public class DCreature implements Creature {
         return name;
     }
 
-    @Override
-    public Position position() {
-        return location;
-    }
-
-    @Override
-    public void setPosition(Position position) {
-        setLocation(location.withPosition(position));
-    }
-
-    public void setLocation(Location location) {
-        this.location = location;
-    }
-
-    public Location location() {
-        return location;
-    }
-
     public void setMetadata(String metadata) {
         this.metadata = metadata;
     }
@@ -113,42 +67,6 @@ public class DCreature implements Creature {
 
     public String type() {
         return type;
-    }
-
-    public String humanSkinTextures() {
-        return humanSkinTextures;
-    }
-
-    public String humanSkinSignature() {
-        return humanSkinSignature;
-    }
-
-    @Override
-    public void setHumanSkin(String textures, String signature) {
-        this.humanSkinTextures = textures;
-        this.humanSkinSignature = signature;
-    }
-
-    @Override
-    public List<TraitKey<?>> traits() {
-        return traits.stream()
-                .map(dt -> CreatureAPI.get().findTrait(dt.trait()).orElse(null))
-                .filter(Objects::nonNull)
-                .collect(Collectors.toList());
-    }
-
-    @Override
-    public void addTrait(TraitKey<?> trait) {
-        if ( traits.stream().anyMatch(t -> t.trait().equals(trait.name())) ) {
-            return;
-        }
-
-        traits.add(new DCreatureTrait(this, trait.name()));
-    }
-
-    @Override
-    public void removeTrait(TraitKey<?> trait) {
-        traits.removeIf(t -> t.trait().equals(trait.name()));
     }
 
 }

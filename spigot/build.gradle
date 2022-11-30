@@ -1,0 +1,56 @@
+plugins {
+    id 'net.minecrell.plugin-yml.bukkit' version '0.5.1'
+    id 'org.jetbrains.kotlin.jvm' version '1.7.0'
+}
+
+repositories {
+    maven { url 'https://hub.spigotmc.org/nexus/content/repositories/snapshots/' }
+    maven { url 'https://jitpack.io' }
+    mavenLocal()
+}
+
+dependencies {
+    implementation project(':common')
+    implementation project(':spigot-api')
+
+    // provided by platform
+//    compileOnly 'org.spigotmc:spigot-api:1.19.2-R0.1-SNAPSHOT'
+    compileOnly("org.spigotmc:spigot:1.19.2-R0.1-SNAPSHOT")
+    compileOnly 'org.slf4j:slf4j-api:1.7.36'
+    compileOnly 'com.google.code.gson:gson:2.+'
+
+    // provided
+    compileOnly 'com.guflimc.brick.i18n:spigot-api:+'
+
+    /// shadow
+    implementation 'cloud.commandframework:cloud-bukkit:+'
+    annotationProcessor 'cloud.commandframework:cloud-annotations:+'
+
+    implementation 'net.kyori:adventure-text-minimessage:4.+'
+    implementation 'net.kyori:adventure-platform-bukkit:4.+'
+
+    implementation 'cloud.commandframework:cloud-core:+'
+    implementation 'cloud.commandframework:cloud-annotations:+'
+
+    implementation 'io.github.jglrxavpok.hephaistos:common:+'
+}
+
+
+compileJava {
+    options.compilerArgs += ["-parameters"]
+    options.fork = true
+    options.forkOptions.executable = 'javac'
+}
+
+bukkit {
+    name = rootProject.name
+    main = project.group + '.spigot.SpigotBrickCreatures'
+    description = 'Create create templates with commands'
+    author = 'GufliMC'
+    website = 'https://github.com/GufliMC/BrickCreatures'
+    apiVersion = '1.13'
+    depend = ["BrickI18n", "BrickRegions"]
+}
+
+// I want it nice like that
+generateBukkitPluginDescription.group = "minecraft"

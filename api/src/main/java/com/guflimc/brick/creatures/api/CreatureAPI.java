@@ -6,16 +6,16 @@ public class CreatureAPI {
 
     private CreatureAPI() {}
 
-    private static CreatureManager<?, ?> creatureManager;
+    private static CreatureManager<?> creatureManager;
 
     @ApiStatus.Internal
-    public static void setCreatureManager(CreatureManager<?, ?> manager) {
+    public static void setCreatureManager(CreatureManager<?> manager) {
         creatureManager = manager;
     }
 
     //
 
-    public static CreatureManager<?, ?> get() {
+    public static CreatureManager<?> get() {
         return creatureManager;
     }
     

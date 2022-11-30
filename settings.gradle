@@ -9,6 +9,6 @@ rootProject.name = 'BrickCreatures'
 
 include 'api'
 include 'common'
-include 'minestom'
-include 'minestom-api'
+include 'spigot'
+include 'spigot-api'
 

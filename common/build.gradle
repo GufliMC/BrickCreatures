@@ -1,20 +1,29 @@
 plugins {
     id 'java-library'
+    id 'io.ebean' version '13.+'
+}
+
+repositories {
+    maven { url 'https://jitpack.io' }
 }
 
 dependencies {
     api project(':api')
 
-    implementation 'net.kyori:adventure-text-serializer-gson:+'
-    implementation 'com.google.code.gson:gson:+'
-
-    // database
-    api 'com.guflimc.brick.orm:common:+'
-
-    implementation 'com.guflimc.brick.maths:database-api:+'
-
-    implementation 'cloud.commandframework:cloud-core:+'
-    implementation 'cloud.commandframework:cloud-annotations:+'
+    // provided
+    compileOnly 'org.slf4j:slf4j-api:1.7.36'
+    compileOnly 'com.google.code.gson:gson:+'
 
     compileOnly 'com.guflimc.brick.i18n:api:+'
+
+    // shadow
+    api 'com.guflimc.brick.orm:ebean:+'
+
+    implementation 'com.guflimc.brick.maths:database-converters:+'
+    implementation 'net.kyori:adventure-platform-api:4.+'
+    implementation 'net.kyori:adventure-text-serializer-gson:+'
+
+    api 'cloud.commandframework:cloud-core:+'
+    api 'cloud.commandframework:cloud-annotations:+'
+    annotationProcessor 'cloud.commandframework:cloud-annotations:+'
 }
