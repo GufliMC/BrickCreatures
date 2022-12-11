@@ -2,6 +2,7 @@ package com.guflimc.brick.creatures.common.commands;
 
 import cloud.commandframework.annotations.Argument;
 import cloud.commandframework.annotations.CommandMethod;
+import cloud.commandframework.annotations.CommandPermission;
 import com.guflimc.brick.creatures.api.CreatureAPI;
 import com.guflimc.brick.creatures.api.domain.Creature;
 import com.guflimc.brick.i18n.api.I18nAPI;
@@ -12,6 +13,7 @@ import java.util.stream.Collectors;
 public class CreatureCommands {
 
     @CommandMethod("bc delete <creature>")
+    @CommandPermission("brick.creatures.delete")
     public void creatureDelete(Audience sender,
                                @Argument(value = "creature") Creature creature
     ) {
@@ -20,6 +22,7 @@ public class CreatureCommands {
     }
 
     @CommandMethod("bc list")
+    @CommandPermission("brick.creatures.list")
     public void creatureList(Audience sender) {
         I18nAPI.get(this).send(sender, "cmd.list",
                 CreatureAPI.get().creatures().stream().map(Creature::name).collect(Collectors.toList()));

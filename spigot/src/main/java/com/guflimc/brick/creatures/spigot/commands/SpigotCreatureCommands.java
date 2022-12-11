@@ -2,13 +2,13 @@ package com.guflimc.brick.creatures.spigot.commands;
 
 import cloud.commandframework.annotations.Argument;
 import cloud.commandframework.annotations.CommandMethod;
+import cloud.commandframework.annotations.CommandPermission;
 import cloud.commandframework.annotations.specifier.Greedy;
 import com.guflimc.brick.creatures.api.CreatureAPI;
 import com.guflimc.brick.creatures.spigot.api.SpigotCreatureAPI;
 import com.guflimc.brick.creatures.spigot.api.domain.SpigotCreature;
 import com.guflimc.brick.creatures.spigot.proxy.SpigotCreatureProxy;
 import com.guflimc.brick.i18n.spigot.api.SpigotI18nAPI;
-import org.bukkit.craftbukkit.v1_19_R1.entity.CraftZombie;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.jglrxavpok.hephaistos.nbt.NBT;
@@ -20,6 +20,7 @@ import java.util.function.Function;
 public class SpigotCreatureCommands {
 
     @CommandMethod("bc create <name> <type>")
+    @CommandPermission("brick.creatures.create")
     public void create(Player sender,
                                @Argument(value = "name") String name,
                                @Argument(value = "type") EntityType type
@@ -34,6 +35,7 @@ public class SpigotCreatureCommands {
     }
 
     @CommandMethod("bc spawn <creature>")
+    @CommandPermission("brick.creatures.spawn")
     public void spawn(Player sender,
                                @Argument(value = "creature") SpigotCreature creature
     ) {
@@ -41,6 +43,7 @@ public class SpigotCreatureCommands {
     }
 
     @CommandMethod("bc getmeta <creature> <key>")
+    @CommandPermission("brick.creatures.getmeta")
     public void getmeta(Player sender,
                         @Argument(value = "creature") SpigotCreature creature,
                         @Argument(value = "key", parserName = "metadata") String key) {
@@ -54,6 +57,7 @@ public class SpigotCreatureCommands {
     }
 
     @CommandMethod("bc setmeta <creature> <key> <value>")
+    @CommandPermission("brick.creatures.setmeta")
     public void setmeta(Player sender,
                              @Argument(value = "creature") SpigotCreature creature,
                              @Argument(value = "key", parserName = "metadata") String key,
